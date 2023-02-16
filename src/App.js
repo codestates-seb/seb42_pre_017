@@ -1,18 +1,15 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+
+import Nav from './components/layout/Nav';
 import { Home } from "./pages/Home";
 import { Post } from "./pages/Post";
 import { PostDetail } from "./pages/PostDetail";
-
+import {Outlet} from 'react-router-dom'
 function App() {
   return (
     <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/post" element={<Post />} />
-          <Route path="/postdetail/:id" element={<PostDetail />} />
-        </Routes>
-      </BrowserRouter>
+     <Nav />
+     <Outlet />
+      
     </>
   );
 }

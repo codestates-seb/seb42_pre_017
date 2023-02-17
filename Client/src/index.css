@@ -12,3 +12,13 @@
 * {
   font-family: "GmarketSansMedium";
 }
+
+body {
+  width: 100vw;
+  height: 100vh;
+  @apply flex justify-center w-full 
+
+}
+#root{
+@apply border border-black w-full
+}

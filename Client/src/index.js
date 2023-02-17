@@ -3,15 +3,10 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { createRoot } from "react-dom/client";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Link,
-} from "react-router-dom";
-import { Home } from './pages/Home';
-import { Post } from './pages/Post';
-import { PostDetail } from './pages/PostDetail';
+import { createBrowserRouter, RouterProvider, Route, Link } from "react-router-dom";
+import { Home } from "./pages/Home";
+import { Post } from "./pages/Post";
+import { PostDetail } from "./pages/PostDetail";
 
 const router = createBrowserRouter([
   {
@@ -19,22 +14,20 @@ const router = createBrowserRouter([
     element: <App />,
     children: [
       {
-        path: '/',
-        element: <Home />
+        path: "/",
+        element: <Home />,
       },
       {
-        path: '/post',
-        element: <Post />
+        path: "/post",
+        element: <Post />,
       },
       {
-        path: '/PostDetail/:id',
-        element: <PostDetail />
+        path: "/PostDetail/:id",
+        element: <PostDetail />,
       },
     ],
-    errorElement:<div>error!!</div>
+    errorElement: <div>error!!</div>,
   },
 ]);
 
-createRoot(document.getElementById("root")).render(
-  <RouterProvider router={router} />
-);
+createRoot(document.getElementById("root")).render(<RouterProvider router={router} />);

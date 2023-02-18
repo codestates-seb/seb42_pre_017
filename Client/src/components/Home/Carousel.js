@@ -18,7 +18,7 @@ export default function Carousel() {
             <div className=''>
               <img
                src='https://www.shinhancard.com/pconts/images/dx/event/2022/221013_gosim_PC_5.jpg'
-               className=''       
+               className='h-[20rem] w-full'       
               />
             </div>
             <div>

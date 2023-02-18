@@ -7,7 +7,7 @@ import { createBrowserRouter, RouterProvider, Route, Link } from "react-router-d
 import { Home } from "./pages/Home";
 import { Post } from "./pages/Post";
 import { PostDetail } from "./pages/PostDetail";
-
+import faker from "faker";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
         element: <Post />,
       },
       {
-        path: "/PostDetail/:id",
+        path: "/postdetail/:id",
         element: <PostDetail />,
       },
     ],

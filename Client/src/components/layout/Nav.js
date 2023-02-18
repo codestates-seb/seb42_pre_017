@@ -1,17 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import logo from '../../img/logo.png'
 import {RxBell} from 'react-icons/rx'
 import {FaRegUserCircle} from 'react-icons/fa'
+import {Link} from 'react-router-dom'
+import MyPageDropDown from '../Home/MyPageDropDown';
+
 export default function Nav() {
+    const [toggle ,setToggle] =useState(false)
     return (
-        <nav className='flex justify-between max-w-screen-xl m-auto p-3'>
-           <div
-            className=''
+        <nav className='flex justify-between max-w-screen-xl m-auto p-3 relative'>
+           <Link to='/'
+            className='cursor-pointer'
            >
              <img src={logo} alt="logo" />
-           </div>
+           </Link>
             <div
-                className='flex gap-5 text-2xl'
+                className='flex gap-7 text-2xl'
             >
                 <button>
                 새 글쓰기
@@ -19,9 +23,12 @@ export default function Nav() {
                 <button>
                  <RxBell />
                 </button>
-                <button>
-                 <FaRegUserCircle />
-                </button>
+                <button
+                    onClick={()=>{setToggle(!toggle)}} 
+                >
+                    <FaRegUserCircle />
+                </button>   
+                {toggle && <MyPageDropDown/>}
             </div>
         </nav>
     );

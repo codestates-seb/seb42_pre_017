@@ -20,5 +20,9 @@ body {
 
 }
 #root{
-@apply border border-black w-full
+@apply  w-full
 }
+.slice-list {
+  height: 20rem;
+}
+

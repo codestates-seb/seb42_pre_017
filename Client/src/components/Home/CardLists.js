@@ -18,14 +18,6 @@ export default function CardLists() {
                             basis-2/3 ' 
             >
                 {data &&  data.map(data=><Card key={data.id} data={data}/>)}
-                {/* <li><Card /></li>
-                <li><Card /></li>
-                <li><Card /></li>
-                <li><Card /></li>
-                <li><Card /></li>
-                <li><Card /></li>
-                <li><Card /></li>
-                <li><Card /></li> */}
             </ul>
         </section>
     );

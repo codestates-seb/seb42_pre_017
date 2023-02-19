@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 
-export default function MyPageDropDown({}) {
+export default function MyPageDropDown() {
    
     return (
         <ul 
-            className='absolute top-full right-0 z-10 bg-whiteMode p-1 text-lg'
+            className='absolute top-full right-0 z-10 bg-white p-1 text-lg'
             
             >
             <li>내작성글</li>
@@ -13,4 +13,3 @@ export default function MyPageDropDown({}) {
         </ul>
     );
 }
-

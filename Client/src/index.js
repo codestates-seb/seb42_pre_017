@@ -3,7 +3,7 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import { createRoot } from "react-dom/client";
-import { createBrowserRouter, RouterProvider, Route, Link } from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Post } from "./pages/Post";
 import { PostDetail } from "./pages/PostDetail";
@@ -22,7 +22,7 @@ const router = createBrowserRouter([
         element: <Post />,
       },
       {
-        path: "/PostDetail/:id",
+        path: "/postdetail/:id",
         element: <PostDetail />,
       },
     ],

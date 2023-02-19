@@ -10,6 +10,7 @@ import { useState } from "react";
 
 export function PostDetail() {
   const [isLike, setIsLike] = useState(false);
+
   return (
     <>
       <div className="flex flex-col justify-center items-center">

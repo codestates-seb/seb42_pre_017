@@ -34,11 +34,11 @@ class TextEditor extends Component {
   ];
 
   render() {
-    const { value, onChange, className } = this.props;
+    const { value, onChange, className, style } = this.props;
     return (
       <>
         <ReactQuill
-          style={{ height: "50vh" }}
+          style={style}
           theme="snow"
           modules={this.modules}
           formats={this.formats}

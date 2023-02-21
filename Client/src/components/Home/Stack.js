@@ -1,10 +1,10 @@
 import React from 'react';
 import {DiJavascript1} from 'react-icons/di'
 import {SiTypescript} from 'react-icons/si'
-export default function Stack({stack,img}) {
+export default function Stack({stack}) {
     return (
         <div>
-        {stack ?
+        {stack === 'javascript' ?
          <div className='border border-yellow-500 w-10 h-10 rounded-full flex items-center'>
          < DiJavascript1 
          className='bg-yellow-500 

@@ -7,14 +7,17 @@ import MyPageDropDown from "../Home/MyPageDropDown";
 
 export default function Nav() {
   const [toggle, setToggle] = useState(false);
+  const handleModal = () =>{
+    
+  }
   return (
-    <nav className="flex justify-between max-w-screen-xl m-auto p-3 relative items-center">
+    <nav className="flex justify-between max-w-screen-2xl m-auto p-3 relative items-center mb-4">
       <Link to="/" className="cursor-pointer">
         <img src={logo} alt="logo" className="w-[50px]" />
       </Link>
       <div className="flex gap-7 text-2xl">
         <Link to="/post">
-          <button className="text-[20px]">새 글쓰기</button>
+          <button className="text-xl">새 글쓰기</button>
         </Link>
         <button>
           <RxBell />
@@ -24,7 +27,7 @@ export default function Nav() {
             setToggle(!toggle);
           }}
         >
-          <FaRegUserCircle />
+          <FaRegUserCircle onClick={handleModal}/>
         </button>
         {toggle && <MyPageDropDown />}
       </div>

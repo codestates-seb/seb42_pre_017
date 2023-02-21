@@ -1,3 +1,13 @@
+<<<<<<< HEAD
+import { useLocation } from 'react-router-dom';
+
+export function PostDetail() {
+
+  return (
+    <>
+      <div>PostDetail</div>
+      
+=======
 import { FiArrowLeft } from "react-icons/fi";
 import { VscAccount } from "react-icons/vsc";
 import { IoChatbubbleOutline } from "react-icons/io5";
@@ -61,6 +71,7 @@ export function PostDetail() {
           </div>
         </main>
       </div>
+>>>>>>> 52f0eecaaeac79c496a228c233f91d3ce80c6426
     </>
   );
 }

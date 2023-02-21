@@ -4,9 +4,13 @@ import Form from "../components/Post/Form";
 import TextEditor from "../components/Post/TextEditor";
 import { GoBook, GoDiffIgnored, GoThreeBars } from "react-icons/go";
 import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 export function Post() {
   const navigate = useNavigate();
+  const [content, setContent] = useState("");
+  console.log(content);
+
   return (
     <>
       <main className="flex flex-col items-center m-[20px]">
@@ -29,7 +33,11 @@ export function Post() {
             <GoDiffIgnored size={24} />
             <span className="text-[20px] ml-[10px]">질문 내용</span>
           </section>
-          <TextEditor className="w-[70vw] mb-[70px]" style={{ height: "50vh" }} />
+          <TextEditor
+            className="w-[70vw] mb-[70px]"
+            style={{ height: "50vh" }}
+            onChange={e => setContent(e.target.value)}
+          />
           <div className="flex justify-end">
             <Link to="/">
               <Buttons

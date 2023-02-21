@@ -8,7 +8,7 @@ import MyPageDropDown from "../Home/MyPageDropDown";
 export default function Nav() {
   const [toggle, setToggle] = useState(false);
   return (
-    <nav className="flex justify-between max-w-screen-xl m-auto p-3 relative items-center">
+    <nav className="flex justify-between max-w-screen-2xl m-auto p-3 relative items-center">
       <Link to="/" className="cursor-pointer">
         <img src={logo} alt="logo" className="w-[50px]" />
       </Link>

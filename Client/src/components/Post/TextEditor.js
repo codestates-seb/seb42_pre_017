@@ -43,6 +43,7 @@ class TextEditor extends Component {
           modules={this.modules}
           formats={this.formats}
           value={value || ""}
+          onChange={onChange}
           // onChange={(content, delta, source, editor) => onChange(editor.getHTML())}
           className={className}
         />

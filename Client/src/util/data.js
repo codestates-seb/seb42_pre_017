@@ -1,6 +1,5 @@
 import axios from 'axios';
 
-//date format 함수  가운데 T 없애는방법 고민해볼게요!
 export function getFormatDate(inputDate) {
     const date = new Date(inputDate)
     return date.toISOString().split('.')[0].split('T').join(' ')

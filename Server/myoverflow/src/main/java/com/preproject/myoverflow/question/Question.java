@@ -38,6 +38,7 @@ public class Question extends Auditable {
     @Column(length = 20, nullable = false)
     private QuestionOpenStatus questionOpenStatus= QuestionOpenStatus.QUESTION_PUBLIC;
 
+
 //    @ManyToOne
 //    @JoinColumn(name = "MEMBER_ID")
 //    private Member member;

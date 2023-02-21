@@ -86,7 +86,6 @@ public class QuestionController {
                 new MultiResponseDto<>(
                         mapper.questionsToResponseDtos(questions), pageQuestions), HttpStatus.OK);
     }
-
 //
 //    @DeleteMapping("{question-id}")
 //    public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive long questionId){

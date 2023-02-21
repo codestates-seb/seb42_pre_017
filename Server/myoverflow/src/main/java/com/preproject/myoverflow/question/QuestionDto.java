@@ -46,6 +46,7 @@ public class QuestionDto {
 
         private Question.QuestionOpenStatus questionOpenStatus;
 
+
         @Positive
         private long memberId;
     }
@@ -67,5 +68,6 @@ public class QuestionDto {
         private int likeCount;
 //        private List<Answer> answers;
         private int answerCount;
+
     }
 }

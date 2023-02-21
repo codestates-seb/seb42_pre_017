@@ -1,4 +1,4 @@
-package com.preproject.myoverflow.like;
+package com.preproject.myoverflow.like.questionlike;
 
 import com.preproject.myoverflow.audit.Auditable;
 import com.preproject.myoverflow.question.Question;

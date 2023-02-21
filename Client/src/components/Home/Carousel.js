@@ -10,7 +10,6 @@ export default function Carousel() {
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
-  
       };
       return (
         <div className='w-full mb-8'>

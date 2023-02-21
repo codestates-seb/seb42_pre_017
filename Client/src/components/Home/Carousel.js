@@ -14,18 +14,16 @@ export default function Carousel() {
   };
   return (
     <div className="w-full mb-8">
-      <Slider {...settings}>
-        <div className="">
-          <img
-            src="https://www.shinhancard.com/pconts/images/dx/event/2022/221013_gosim_PC_5.jpg"
-            className="h-[20rem] w-full"
-            alt="캐러셀 이미지"
-          />
-        </div>
-        <div>
-          <h3>2</h3>
-        </div>
-      </Slider>
+      <div>
+        <Slider {...settings}>
+          <div>
+            <img src="images/carousel1.jpg" className="h-[20rem] w-full relative" alt="캐러셀 이미지" />
+          </div>
+          <div>
+            <img src="images/carousel1.jpg" className="h-[20rem] w-full relative" alt="캐러셀 이미지" />
+          </div>
+        </Slider>
+      </div>
     </div>
   );
 }

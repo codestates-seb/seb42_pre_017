@@ -1,6 +1,7 @@
 package com.preproject.myoverflow.question;
 
 
+import com.preproject.myoverflow.answer.Answer;
 import com.preproject.myoverflow.audit.Auditable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -8,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -26,9 +28,9 @@ public class Question extends Auditable {
     @Column(nullable = false)
     private String content;
 
-    @Column(nullable = false)
     @ElementCollection(targetClass=String.class)
-    private List<String> category;
+    @CollectionTable(name = "QUESTION_CATEGORY",joinColumns = @JoinColumn(name="QUESTION_ID"))
+    private List<String> category = new ArrayList<>();
 
     @Enumerated(value = EnumType.STRING)
     @Column(length = 21, nullable = false)
@@ -43,8 +45,8 @@ public class Question extends Auditable {
 //    @JoinColumn(name = "MEMBER_ID")
 //    private Member member;
 
-//    @ManyToOne
-//    private List<Answer> answers;
+    @OneToMany(mappedBy = "question",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+    private List<Answer> answers = new ArrayList<>();
 
     public enum QuestionAnswerStatus {
         QUESTION_ANSWERED("답변완료"),

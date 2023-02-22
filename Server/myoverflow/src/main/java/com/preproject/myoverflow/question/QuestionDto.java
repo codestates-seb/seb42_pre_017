@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
@@ -33,10 +34,10 @@ public class QuestionDto {
 
         private long questionId;
 
-        @NotBlank(message = "제목은 공백이 아니어야 합니다.")
+        @NotEmpty(message = "제목은 공백이 아니어야 합니다.")
         private String title;
 
-        @NotBlank(message = "내용은 공백이 아니어야함")
+        @NotEmpty(message = "내용은 공백이 아니어야함")
         private String content;
 
         @NotNull //"" 나 " "은 허용
@@ -68,6 +69,5 @@ public class QuestionDto {
         private int likeCount;
 //        private List<Answer> answers;
         private int answerCount;
-
     }
 }

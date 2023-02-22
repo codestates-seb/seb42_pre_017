@@ -7,9 +7,7 @@ import MyPageDropDown from "../Home/MyPageDropDown";
 
 export default function Nav() {
   const [toggle, setToggle] = useState(false);
-  const handleModal = () =>{
-    
-  }
+  const handleModal = () => {};
   return (
     <nav className="flex justify-between max-w-screen-2xl m-auto p-3 relative items-center mb-4">
       <Link to="/" className="cursor-pointer">
@@ -27,7 +25,7 @@ export default function Nav() {
             setToggle(!toggle);
           }}
         >
-          <FaRegUserCircle onClick={handleModal}/>
+          <FaRegUserCircle onClick={handleModal} />
         </button>
         {toggle && <MyPageDropDown />}
       </div>

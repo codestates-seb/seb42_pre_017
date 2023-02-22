@@ -5,7 +5,7 @@ import Select from "@mui/material/Select";
 
 export default function DropDown({ sx, setStack, stack, displayEmpty }) {
   const handleChange = event => {
-    setStack(event.target.value);
+    setStack([event.target.value]);
   };
 
   return (

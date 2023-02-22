@@ -14,16 +14,24 @@ export default function Carousel() {
   };
   return (
     <div className="w-full mb-8">
-      <div>
-        <Slider {...settings}>
-          <div>
-            <img src="images/carousel1.jpg" className="h-[20rem] w-full relative" alt="캐러셀 이미지" />
+      <Slider {...settings}>
+        <div className="relative">
+          <img
+            src="https://media.discordapp.net/attachments/1074547874861437034/1077512574540726333/aurora-ge1e6c05e2_1920.jpg?width=1038&height=692"
+            className="h-[20rem] w-full z-0"
+            alt="캐러셀이미지"
+          />
+        </div>
+        <div>
+          <div className="">
+            <img
+              src="https://media.discordapp.net/attachments/1074547874861437034/1077512574540726333/aurora-ge1e6c05e2_1920.jpg?width=1038&height=692"
+              className="h-[20rem] w-full"
+              alt="캐러셀이미지"
+            />
           </div>
-          <div>
-            <img src="images/carousel1.jpg" className="h-[20rem] w-full relative" alt="캐러셀 이미지" />
-          </div>
-        </Slider>
-      </div>
+        </div>
+      </Slider>
     </div>
   );
 }

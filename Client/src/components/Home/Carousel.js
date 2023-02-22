@@ -14,16 +14,22 @@ export default function Carousel() {
       return (
         <div className='w-full mb-8'>
           <Slider {...settings}>
-            <div className=''>
+            <div className='relative'>
               <img
-               src='https://www.shinhancard.com/pconts/images/dx/event/2022/221013_gosim_PC_5.jpg'
-               className='h-[20rem] w-full'       
+               src='https://media.discordapp.net/attachments/1074547874861437034/1077512574540726333/aurora-ge1e6c05e2_1920.jpg?width=1038&height=692'
+               className='h-[20rem] w-full z-0'
+               alt='캐러셀이미지'       
               />
             </div>
             <div>
-              <h3>2</h3>
+            <div className=''>
+              <img
+               src='https://media.discordapp.net/attachments/1074547874861437034/1077512574540726333/aurora-ge1e6c05e2_1920.jpg?width=1038&height=692'
+               className='h-[20rem] w-full'
+               alt='캐러셀이미지'       
+              />
             </div>
-            
+            </div>
           </Slider>
         </div>
       );

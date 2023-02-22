@@ -14,8 +14,8 @@ export default function Card({data}) {
     return (
         <li
         onClick={handleClick} 
-        className='border-2 border-gray-400 rounded-2xl cursor-pointer
-                    hover:scale-105 duration-300 w-30 h-[20rem] p-3 flex flex-col justify-between'
+        className='border-2 border-gray-400 rounded-[6rem] cursor-pointer
+                    hover:scale-105 duration-300 w-[21rem] h-[25rem] p-10 flex flex-col justify-between'
           >
             <div
             className='flex flex-col justify-center items-start gap-3 text-darkMode'
@@ -26,7 +26,7 @@ export default function Card({data}) {
                 </div>
                 <div className='bg-gray-300 rounded-2xl p-1 text-sm'>{category}</div>
                 <Stack stack={category}/>
-                <div className='line-clamp-2'>{content}</div>     
+                <div className='line-clamp-2 text-sm'>{content}</div>     
             </div>
             <div className='flex justify-between mb-3'>
                  <div className='font-semibold'>{nickname}</div>

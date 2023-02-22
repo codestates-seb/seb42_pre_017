@@ -1,5 +1,5 @@
 {
-  "data": [
+  "questions": [
     {
       "questionId": 1,
       "title": "자바스크립트 nodelist 질문 드립니다.",
@@ -1131,5 +1131,6 @@
       }
       }
     ]
+    
   
 }

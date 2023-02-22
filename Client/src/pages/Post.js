@@ -9,7 +9,7 @@ export function Post() {
   const navigate = useNavigate();
   return (
     <>
-      <main className="flex flex-col items-center m-[20px]">
+      <main className="flex flex-col items-center max-w-screen-2xl m-auto">
         <div className="mb-[20px]">
           <section className="flex">
             <GoBook size={24} />

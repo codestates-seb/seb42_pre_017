@@ -1,26 +1,15 @@
-<<<<<<< HEAD
-import { useLocation } from 'react-router-dom';
-
-export function PostDetail() {
-
-  return (
-    <>
-      <div>PostDetail</div>
-      
-=======
 import { FiArrowLeft } from "react-icons/fi";
 import { VscAccount } from "react-icons/vsc";
 import { IoChatbubbleOutline } from "react-icons/io5";
 import { GoDiffIgnored } from "react-icons/go";
 import Buttons from "../components/Post/Buttons";
 import TextEditor from "../components/Post/TextEditor";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { useState } from "react";
 
 export function PostDetail() {
   const [isLike, setIsLike] = useState(false);
-
   return (
     <>
       <div className="flex flex-col justify-center items-center">
@@ -71,7 +60,6 @@ export function PostDetail() {
           </div>
         </main>
       </div>
->>>>>>> 52f0eecaaeac79c496a228c233f91d3ce80c6426
     </>
   );
 }

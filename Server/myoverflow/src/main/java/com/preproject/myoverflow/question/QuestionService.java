@@ -53,7 +53,11 @@ public class QuestionService {
         System.out.println("*".repeat(70));
         System.out.println("cate");
         System.out.println(category.get(0));
-        return repository.findAllByQuestion(category.get(0), PageRequest.of(page, size, Sort.by("createdAt").descending()));
+        return repository.findByCategory(category, PageRequest.of(page, size, Sort.by("createdAt").descending()));
+    }
+
+    public void deleteQuestion(long questionId){
+        repository.delete(findVerifiedQuestion(questionId));
     }
 
 //    private Question findVerifiedQuestion(long questionId, long memberId){
@@ -67,7 +71,7 @@ public class QuestionService {
 //                optionalQuestion.or()
 //    }
 
-    private Question findVerifiedQuestion(long questionId) {
+    public Question findVerifiedQuestion(long questionId) {
         Optional<Question> optionalQuestion = repository.findById(questionId);
         Question foundQuestion =
                 optionalQuestion

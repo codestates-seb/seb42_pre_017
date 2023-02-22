@@ -9,18 +9,15 @@ import { useEffect, useState } from "react";
 import { getAnswerData } from "../util/data";
 import Form from "../components/Post/Form";
 import axios from "axios";
-
 export function PostDetail() {
   const [answerData, setAnswerData] = useState([]);
   const [userAnswerInput, setUserAnswerInput] = useState("");
   const [isLike, setIsLike] = useState(false);
   const { data } = useLocation().state;
   const { cartegory, content, createdAT, nickname, questionLike, title, answerCount } = data;
-
   useEffect(() => {
     getAnswerData().then(res => setAnswerData(res));
   }, []);
-
   const handleSubmit = e => {
     const baseUrl = "http://localhost:4000/answer";
     const newAnswer = {
@@ -38,7 +35,6 @@ export function PostDetail() {
     alert("답변이 등록되었어요.");
     setUserAnswerInput("");
   };
-
   return (
     <>
       <div className="flex flex-col justify-center items-center">

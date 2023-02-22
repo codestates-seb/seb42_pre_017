@@ -7,6 +7,9 @@ export function getFormatDate(inputDate) {
 export function getAllData(page,category){
 return axios.get(`http://localhost:4000/questions?_page=${page}${category}`).then(res=>res.data)
 }
+export function getAnswerData() {
+  return axios.get("http://localhost:4000/answer").then(res => res.data);
+}
 // export function getTypeScript(page,category){
 //     return axios.get('http://localhost:4000/typescript').then(res=>res.data)
 // }

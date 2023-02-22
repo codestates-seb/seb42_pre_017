@@ -29,6 +29,7 @@ export default function Nav() {
             setToggle(!toggle);
           }}
         >
+
           <FaRegUserCircle onClick={handleModal}/>
         </button>
         {toggle && <MyPageDropDown />}

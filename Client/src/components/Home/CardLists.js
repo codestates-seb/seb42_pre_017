@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import { getAllData } from '../../util/data';
 import Card from './Card';
@@ -18,9 +17,7 @@ export default function CardLists() {
         getAllData(page.toString()).then(res=>setData(res))
     } 
   },[filter,page])
-  
     return (
-      
         <section
         className='max-w-screen-2xl m-auto p-5'
         >   
@@ -36,9 +33,6 @@ export default function CardLists() {
                     {data &&  data.map(data=><Card key={data.questionId} data={data}/>)}
                 </ul>
             <Page page={page} onPage={setPage} data={data}/>
-        </section>
-
-        
+        </section>   
     );
 }
-

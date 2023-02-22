@@ -16,12 +16,17 @@ create table if not exists question (
 );
 
 create table if not exists question_category (
+<<<<<<< HEAD
     question_id bigint not null,
+=======
+    question_question_id bigint not null,
+>>>>>>> 1ac39782a8c0df2fc1e6fd53987bc9daf1cca345
     category varchar(255) not null
 );
 
 alter table question_category {
    add constraint FK5gjf122b4kv9jdqbyqi2tehoi
+<<<<<<< HEAD
    foreign key (question_id)
    references question
 };
@@ -41,3 +46,8 @@ alter table question_category {
            foreign key (question_id)
            references question
         };
+=======
+   foreign key (question_question_id)
+   references question
+};
+>>>>>>> 1ac39782a8c0df2fc1e6fd53987bc9daf1cca345

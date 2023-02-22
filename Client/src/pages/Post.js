@@ -9,16 +9,17 @@ import axios from "axios";
 export function Post() {
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
-  const [stack, setStack] = useState("");
+  const [stack, setStack] = useState([]);
   const [content, setContent] = useState("");
 
   const handleSubmit = e => {
     const newData = {
+      memberId: 1,
       title,
       category: stack,
       content,
     };
-    axios.post("http://localhost:4000/data", newData);
+    axios.post(`http://3.36.120.221:8080/questions`, newData);
     e.preventDefault();
     alert("등록");
     setTitle("");

@@ -7,15 +7,15 @@ import MyPageDropDown from "../Home/MyPageDropDown";
 
 export default function Nav() {
   const [toggle, setToggle] = useState(false);
-  const handleModal = () =>{
-  }
+  const handleModal = () => {};
   return (
     <nav
-     className="flex justify-between max-w-screen-2xl
-                 m-auto p-3 relative items-center mb-8">
+      className="flex justify-between max-w-screen-2xl
+                 m-auto p-3 relative items-center mb-8"
+    >
       <Link to="/" className="cursor-pointer">
         <img src={logo} alt="logo" className="w-[50px]" />
-        <div className='text-2xl font-mono font-bold'>My OverFlow</div>
+        <div className="text-2xl font-mono font-bold">My OverFlow</div>
       </Link>
       <div className="flex gap-7 text-2xl">
         <Link to="/post">
@@ -29,8 +29,7 @@ export default function Nav() {
             setToggle(!toggle);
           }}
         >
-
-          <FaRegUserCircle onClick={handleModal}/>
+          <FaRegUserCircle onClick={handleModal} />
         </button>
         {toggle && <MyPageDropDown />}
       </div>

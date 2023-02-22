@@ -30,7 +30,7 @@ export function PostDetail() {
       },
       nickName: "user6",
     };
-    axios.post("http://localhost:4000/answer", newAnswer);
+    axios.post("http://3.36.120.221:8080/answers", newAnswer);
     e.preventDefault();
     alert("답변이 등록되었어요.");
     setUserAnswerInput("");

@@ -12,28 +12,28 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
 
-@RestController
+@RestController // www.codestats.com/members/1
 @RequestMapping("/members")
 @Validated
 @Slf4j
 public class MemberController {
     //@Autowired
-    private final MemberService service;
+    private final MemberService memberService;
     private final MemberMapper mapper;
 
-    public MemberController(MemberMapper mapper, MemberService service){
-        this.service = service;
+    public MemberController(MemberMapper mapper, MemberService memberService){
+        this.memberService = memberService;
         this.mapper = mapper;
     }
 
     @PostMapping
-    public ResponseEntity postQuestion(@Valid @RequestBody MemberDto.Post requestBody){
+    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post memberPost){
 
-        Member member = mapper.MemberPostToMember(requestBody);
+        Member member = mapper.MemberPostToMember(memberPost); //MemberDto --> Member 이제우리는 Member만쓰면된다. 이걸로 로직처리한다.
 
-        Member createdMember = service.createMember(member);
+        Member createdMember = memberService.createMember(member);
 
-        return new ResponseEntity<>(createdMember, HttpStatus.CREATED);
+        return new ResponseEntity<>(mapper.MemberToMemberResponseDto(createdMember), HttpStatus.CREATED);
 
 
 //        URI location = UriComponentsBuilder
@@ -44,16 +44,22 @@ public class MemberController {
 //        return ResponseEntity.created(location).build();
     }
 //
-//    @PatchMapping("{question-id")
-//    public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long questionId,
-//                                        @Valid @RequestBody QuestionDto.Patch requestBody){
+//    @PatchMapping("{member-id}")
+//    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
+//                                        @Valid @RequestBody MemberDto.Patch memberPatch){
+//        memberPatch.setMemberId(memberId);
+//
+//        Member member = mapper.MemberPatchToMember(memberPatch);
+//        Member updateMember = service.updateMember(member);
+//        return new ResponseEntity<>(mapper.MemberToMemberResponseDto(updateMember), HttpStatus.OK);
 //
 //    }
 //
-//    @GetMapping("{question-id}")
-//    public ResponseEntity getQuestion(@PathVariable("question-id") @Positive long questionId){
-//
-//    }
+    @GetMapping("{member-id}")
+    public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId){
+        Member response = memberService.findMember(memberId);
+        return new ResponseEntity<>(mapper.MemberToMemberResponseDto(response), HttpStatus.OK);
+    }
 //
 //    @GetMapping
 //    public ResponseEntity getQuestions(){

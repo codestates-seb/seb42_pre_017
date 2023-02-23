@@ -67,7 +67,7 @@ public class QuestionService {
 //                optionalQuestion.or()
 //    }
 
-    private Question findVerifiedQuestion(long questionId) {
+    public Question findVerifiedQuestion(long questionId) {
         Optional<Question> optionalQuestion = repository.findById(questionId);
         Question foundQuestion =
                 optionalQuestion

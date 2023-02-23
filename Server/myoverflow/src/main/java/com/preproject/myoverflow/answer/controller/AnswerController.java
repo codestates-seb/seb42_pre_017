@@ -7,6 +7,7 @@ import com.preproject.myoverflow.answer.dto.AnswerPostDto;
 import com.preproject.myoverflow.answer.entity.Answer;
 import com.preproject.myoverflow.answer.mapper.AnswerMapper;
 import com.preproject.myoverflow.answer.service.AnswerService;
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
+import java.util.List;
 
 @RestController
-@RequestMapping("/v1/answer")
+@RequestMapping("/answers")
 @Validated
 public class AnswerController {
 
@@ -47,6 +50,19 @@ public class AnswerController {
 
         return new ResponseEntity<>(mapper.answerToAnswerResponseDto(response), HttpStatus.OK);
     }
+
+    @GetMapping("/{answer-id}")
+    public ResponseEntity findAnswer(@Positive @PathVariable("answer-id")long answerId){
+        return new ResponseEntity<>(mapper.answerToAnswerResponseDto(answerService.findAnswer(answerId)), HttpStatus.OK);
+    }
+
+    @GetMapping
+    public ResponseEntity findQuestionAnswers(@Positive @RequestParam long questionId){
+        List<Answer> foundAnswers = answerService.findAllAnswers(questionId);
+        return new ResponseEntity<>(mapper.answerListToAnswerResponseDtos(foundAnswers), HttpStatus.OK);
+    }
+
+
 
     @DeleteMapping("/{answer-id}")
     public ResponseEntity deleteAnswer(

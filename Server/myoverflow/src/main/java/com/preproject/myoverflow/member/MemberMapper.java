@@ -7,6 +7,10 @@ import java.util.List;
 
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.IGNORE)
 public interface MemberMapper {
-    Member MemberPostToMember(MemberDto.Post requestBody);
+    Member MemberPostToMember(MemberDto.Post memberPost);
+
+    Member MemberPatchToMember(MemberDto.Patch memberPatch);
+
+    MemberDto.Response MemberToMemberResponseDto(Member member);
 //    List<QuestionDto.Response> questionsToResponses(List<Question> questions);
 }

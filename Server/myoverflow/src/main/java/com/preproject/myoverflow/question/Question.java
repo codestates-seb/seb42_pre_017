@@ -2,6 +2,7 @@ package com.preproject.myoverflow.question;
 
 
 import com.preproject.myoverflow.audit.Auditable;
+import com.preproject.myoverflow.member.Member;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -39,9 +40,13 @@ public class Question extends Auditable {
     private QuestionOpenStatus questionOpenStatus= QuestionOpenStatus.QUESTION_PUBLIC;
 
 
-//    @ManyToOne
-//    @JoinColumn(name = "MEMBER_ID")
-//    private Member member;
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
+    public void addMember(Member member){
+        this.member = member;
+    }
 
 //    @ManyToOne
 //    private List<Answer> answers;

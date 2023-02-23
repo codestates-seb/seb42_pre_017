@@ -18,22 +18,22 @@ import java.net.URI;
 @Slf4j
 public class MemberController {
     //@Autowired
-    private final MemberService service;
+    private final MemberService memberservice;
     private final MemberMapper mapper;
 
-    public MemberController(MemberMapper mapper, MemberService service){
-        this.service = service;
+    public MemberController(MemberMapper mapper, MemberService memberservice){
+        this.memberservice = memberservice;
         this.mapper = mapper;
     }
 
     @PostMapping
-    public ResponseEntity postQuestion(@Valid @RequestBody MemberDto.Post requestBody){
+    public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post memberPost){
 
-        Member member = mapper.MemberPostToMember(requestBody);
+        Member member = mapper.MemberPostToMember(memberPost);
 
-        Member createdMember = service.createMember(member);
+        Member createdMember = memberservice.createMember(member);
 
-        return new ResponseEntity<>(createdMember, HttpStatus.CREATED);
+        return new ResponseEntity<>(mapper.MemberToMemberResponseDto(createdMember), HttpStatus.CREATED);
 
 
 //        URI location = UriComponentsBuilder
@@ -44,16 +44,20 @@ public class MemberController {
 //        return ResponseEntity.created(location).build();
     }
 //
-//    @PatchMapping("{question-id")
-//    public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long questionId,
-//                                        @Valid @RequestBody QuestionDto.Patch requestBody){
-//
+//    @PatchMapping("{member-id}")
+//    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
+//                                        @Valid @RequestBody MemberDto.Patch memberPatch){
+//        memberPatch.setMemberId(memberId);
+//        Member member = mapper.MemberPatchToMember(memberPatch);
+//        Member updatedMember = service.updateMember(member);
+//        return new ResponseEntity<>(mapper.MemberToMemberResponseDto(updatedMember), HttpStatus.OK);
 //    }
 //
-//    @GetMapping("{question-id}")
-//    public ResponseEntity getQuestion(@PathVariable("question-id") @Positive long questionId){
-//
-//    }
+    @GetMapping("{member-id}")
+    public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId){
+        Member response = memberservice.findMember(memberId);
+        return new ResponseEntity<>(mapper.MemberToMemberResponseDto(response), HttpStatus.OK);
+    }
 //
 //    @GetMapping
 //    public ResponseEntity getQuestions(){

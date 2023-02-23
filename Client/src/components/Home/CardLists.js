@@ -12,18 +12,13 @@ export default function CardLists() {
   useEffect(() => {
     const stack = filter.toLowerCase();
     if (filter !== "전체") {
-      getAllData()
-        .then(res => setData(res))
-        .catch(err => console.log(err));
+      getAllData().then(res => setData(res));
     } else {
-      getAllData()
-        .then(res => setData(res))
-        .catch(err => console.log(err));
-      console.log("error 확인" + data);
+      getAllData().then(res => setData(res));
     }
   }, [filter, page]);
   return (
-    <section className="max-w-screen-2xl m-auto p-5">
+    <section className="m-auto p-5">
       <PopularTap />
       <nav className="gap-6 mb-10 flex">
         {filteredTap.map((filter, idx) => (
@@ -32,7 +27,7 @@ export default function CardLists() {
       </nav>
       <ul
         className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6
-                                basis-2/3 "
+                              basis-2/3"
       >
         {data && data.map((data, idx) => <Card key={idx} data={data} />)}
       </ul>

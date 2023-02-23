@@ -13,6 +13,7 @@ export function Post() {
   const [content, setContent] = useState("");
 
   const handleSubmit = e => {
+    e.preventDefault();
     const newData = {
       memberId: 1,
       title,
@@ -20,15 +21,13 @@ export function Post() {
       content,
     };
     axios.post(`http://3.36.120.221:8080/questions`, newData);
-    e.preventDefault();
-    alert("등록");
-    setTitle("");
-    setContent("");
+    alert("질문이 등록되었어요.");
+    navigate("/");
   };
 
   return (
     <>
-      <main className="flex flex-col items-center m-[20px]">
+      <main className="flex flex-col items-center m-[20px] max-w-screen-2xl">
         <form onSubmit={handleSubmit}>
           <div className="mb-5">
             <section className="flex">
@@ -37,7 +36,7 @@ export function Post() {
             </section>
             <Form
               sx={{ width: "70vw" }}
-              placeholder="질문 제목을 입력해주세요!"
+              placeholder="질문 제목을 입력해주세요."
               onChange={e => setTitle(e.target.value)}
               value={title}
             />
@@ -62,17 +61,13 @@ export function Post() {
                 "& .MuiInputBase-root": {
                   height: 500,
                 },
-                verticalAlign: "text-top",
-                // display: "flex",
-                // justifyContent: "flex-end",
-                // alignItems: "start",
-                // alignItems: "center",
               }}
+              rows={20}
               onChange={e => setContent(e.target.value)}
               value={content}
-              placeholder="질문을 자유롭게 올려보세요."
+              placeholder="질문 내용을 입력해주세요."
             />
-            <div className="flex justify-end mt-5">
+            <div className="flex justify-end mt-5 mb-7">
               <Link to="/">
                 <Buttons
                   sx={{ width: 140, fontSize: 18, marginRight: "30px", border: "0.5px solid gray", color: "black" }}

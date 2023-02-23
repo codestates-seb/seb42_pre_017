@@ -37,7 +37,7 @@ export function PostDetail() {
   };
   return (
     <>
-      <div className="flex flex-col justify-center items-center">
+      <div className="flex flex-col justify-center items-center max-w-screen-2xl">
         <main className="w-[60vw] overflow-auto">
           <Link to="/">
             <FiArrowLeft size={40} />
@@ -104,6 +104,8 @@ export function PostDetail() {
                   },
                 }}
                 value={userAnswerInput}
+                rows={7}
+                placeholder="질문에 답변을 등록해보세요."
                 onChange={e => setUserAnswerInput(e.target.value)}
               />
               <div className="flex justify-end mb-[40px] mt-5">

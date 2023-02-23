@@ -9,30 +9,34 @@ export default function Nav() {
   const [toggle, setToggle] = useState(false);
   const handleModal = () => {};
   return (
-    <nav
-      className="flex justify-between max-w-screen-2xl
-                 m-auto p-3 relative items-center mb-8"
-    >
-      <Link to="/" className="cursor-pointer">
-        <img src={logo} alt="logo" className="w-[50px]" />
-        <div className="text-2xl font-mono font-bold">My OverFlow</div>
-      </Link>
-      <div className="flex gap-7 text-2xl">
-        <Link to="/post">
-          <button className="text-xl">새 글쓰기</button>
-        </Link>
-        <button>
-          <RxBell />
-        </button>
-        <button
-          onClick={() => {
-            setToggle(!toggle);
-          }}
-        >
-          <FaRegUserCircle onClick={handleModal} />
-        </button>
-        {toggle && <MyPageDropDown />}
-      </div>
-    </nav>
+    <div className="m-10">
+      <nav
+        className="flex justify-between max-w-screen-2xl w-[70vw] h-0
+                 m-auto p-3 relative items-center"
+      >
+        <div className="flex">
+          <Link to="/" className="cursor-pointer">
+            <img src="/images/logo-icon2.png" alt="logo-icon" className="w-[45px] inline-block" />
+            <img src={"/images/logo.png"} alt="logo" className="w-[180px] inline-block" />
+          </Link>
+        </div>
+        <div className="flex gap-7 text-2xl">
+          <Link to="/post">
+            <button className="text-xl">새 글쓰기</button>
+          </Link>
+          <button>
+            <RxBell />
+          </button>
+          <button
+            onClick={() => {
+              setToggle(!toggle);
+            }}
+          >
+            <FaRegUserCircle onClick={handleModal} />
+          </button>
+          {toggle && <MyPageDropDown />}
+        </div>
+      </nav>
+    </div>
   );
 }

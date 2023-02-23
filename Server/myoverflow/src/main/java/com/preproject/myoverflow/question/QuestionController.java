@@ -77,19 +77,20 @@ public class QuestionController {
                                        @Positive @RequestParam int size){
         System.out.println("*".repeat(75));
         category.stream().forEach(a -> System.out.println(a));
-        Page<Question> pageQuestions = category.isEmpty()?
+//        Page<Question> pageQuestions = service.getQuestions(page - 1,size);
+
+                        Page<Question> pageQuestions = category.isEmpty()?
                 service.getQuestions(page - 1,size) :
                 service.getQuestions(category, page - 1, size);
-        System.out.println(gson.toJson(pageQuestions));
         List<Question> questions = pageQuestions.getContent();
         return new ResponseEntity(
                 new MultiResponseDto<>(
                         mapper.questionsToResponseDtos(questions), pageQuestions), HttpStatus.OK);
     }
-//
-//    @DeleteMapping("{question-id}")
-//    public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive long questionId){
-//
-//    }
 
+    @DeleteMapping("{question-id}")
+    public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive long questionId){
+        service.deleteQuestion(questionId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
 }

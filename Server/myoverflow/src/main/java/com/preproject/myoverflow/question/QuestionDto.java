@@ -4,6 +4,8 @@ import com.preproject.myoverflow.like.questionlike.QuestionLike;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import javax.validation.constraints.NotBlank;
 
@@ -14,6 +16,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class QuestionDto {
+
     @Getter
     public static class Post{
         @NotBlank(message = "제목은 공백이 아니어야 합니다.")

@@ -1,7 +1,6 @@
 import * as React from "react";
 import TextField from "@mui/material/TextField";
-
-export default function Form({ placeholder, sx, value, onChange, require }) {
+export default function Form({ placeholder, sx, value, onChange, rows, required }) {
   return (
     <div>
       <TextField
@@ -10,7 +9,8 @@ export default function Form({ placeholder, sx, value, onChange, require }) {
         value={value}
         onChange={onChange}
         placeholder={placeholder}
-        require={require}
+        required
+        rows={rows}
         multiline
       />
     </div>

@@ -18,7 +18,7 @@ export default function Carousel() {
         <div className="relative">
           <img
             src="https://media.discordapp.net/attachments/1074547874861437034/1077512574540726333/aurora-ge1e6c05e2_1920.jpg?width=1038&height=692"
-            className="h-[20rem] w-full z-0"
+            className="h-[20rem] w-full"
             alt="캐러셀이미지"
           />
         </div>

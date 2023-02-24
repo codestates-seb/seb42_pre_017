@@ -16,4 +16,3 @@ export function getCategoryData(page,category) {
 export function getAnswerData() {
   return axios.get(`http://3.36.120.221:8080/answer?questionId=1`).then(res => res.data.data);
 }
-

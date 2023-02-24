@@ -4,36 +4,53 @@ import Card from "./Card";
 import SubNav from "./SubNav";
 import PopularTap from "./PopularTap";
 import Page from "./Page";
-const filteredTap = ['전체','Javascript','Typescript','React','Java','Spring'];
+const filteredTap = ['Javascript','Typescript','React','Java','Spring'];
 export default function CardLists() {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState("전체");
-  const [page, setPage] = useState(1);
+  const [pagenation, setPagenation] = useState({
+  page:1,
+  totalElements:0,
+  totalPages:0
+  });
+  console.log(filter);
   const [click,setClick] = useState([])
-  console.log(click);
-  console.log(click.join(','));//이 방식으로 카테고리 path variable 변수 지정
+
   useEffect(() => {
-    // const stack = filter.toLowerCase()
-    //reduce
     const stack = click.join(',')
-    console.log(stack);
     if (filter  === "전체") {
-      getAllData(page)
+      getAllData(pagenation.page)
         .then(res => {
-          setData(res)
-          
+          setData(res.data)
+          setPagenation({
+            page:res.pageInfo.page,
+            totalElements:res.pageInfo.totalElements,
+            totalPages:res.pageInfo.totalPages
+          })
         })
         .catch(err => console.log(err));   
     } else {
-      getCategoryData(page,stack)
-        .then(res => setData(res))
+      getCategoryData(pagenation.page,stack)
+        .then(res => {
+          setData(res.data)
+          setPagenation({
+            page:res.pageInfo.page,
+            totalElements:res.pageInfo.totalElements,
+            totalPages:res.pageInfo.totalPages
+          })
+      })
         .catch(err => console.log(err));
       console.log( data);
     }
-  }, [filter, page,click]);
+  }, [filter, pagenation.page,click]);
+  console.log(pagenation);
   return (
     <section className="max-w-screen-2xl m-auto p-5">
-      <PopularTap />
+      <SubNav
+       onFilter={setFilter}
+       filter='전체'
+       onClick={setClick}
+       click={click} />
       <nav className="gap-6 mb-10 flex">
         {filteredTap.map((filter, idx) => (
           <SubNav
@@ -48,12 +65,11 @@ export default function CardLists() {
         ))}
       </nav>
       <ul
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6
-                                basis-2/3 "
+        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 basis-2/3 "
       >
         {data && data.map((data, idx) => <Card key={idx} data={data} />)}
       </ul>
-      <Page page={page} onPage={setPage} data={data} />
+      <Page pagenation={pagenation} onPagenation={setPagenation} data={data} />
     </section>
   );
 }

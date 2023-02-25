@@ -3,6 +3,7 @@ import { getAllData, getCategoryData } from "../../util/data";
 import Card from "./Card";
 import SubNav from "./SubNav";
 import Page from "./Page";
+import PopularTap from './PopularTap';
 const filteredTap = ['Javascript','Typescript','React','Java','Spring'];
 export default function CardLists() {
   const [data, setData] = useState([]);
@@ -12,9 +13,7 @@ export default function CardLists() {
   totalElements:0,
   totalPages:0
   });
-  console.log(filter);
   const [click,setClick] = useState([])
-
   useEffect(() => {
     const stack = click.join(',')
     if (filter  === "전체") {
@@ -44,13 +43,9 @@ export default function CardLists() {
   }, [filter, pagenation.page,click]);
   console.log(pagenation);
   return (
-    <section className="max-w-screen-2xl m-auto p-5">
-      <SubNav
-       onFilter={setFilter}
-       filter={filter}
-       onClick={setClick}
-       click={click}
-       text='전체' />
+    <section className="max-w-screen-2xl m-auto p-5 w-[70vw]">
+      {/* <SubNav onFilter={setFilter} filter={filter} onClick={setClick} click={click} text='전체' /> */}
+       <PopularTap />
       <nav className="gap-6 mb-10 flex">
         {filteredTap.map((text, idx) => (
           <SubNav
@@ -65,12 +60,14 @@ export default function CardLists() {
            />
         ))}
       </nav>
-      <ul
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 basis-2/3 "
-      >
-        {data && data.map((data, idx) => <Card key={idx} data={data} />)}
-      </ul>
-      <Page pagenation={pagenation} onPagenation={setPagenation} data={data} />
+      <div className='h-[80vh]'>
+        <ul
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 h-full"
+        >
+          {data && data.map((data, idx) => <Card key={idx} data={data} />)}
+        </ul>
+        <Page pagenation={pagenation} onPagenation={setPagenation} data={data} />
+      </div>
     </section>
   );
 }

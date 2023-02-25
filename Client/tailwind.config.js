@@ -5,6 +5,9 @@ module.exports = {
     extend: {
       colors: {
         whiteMode: "#FFFFFF",
+      },
+      animation: {
+        'spin-slow': 'spin 0.4s linear infinite',
       }
     },
   },

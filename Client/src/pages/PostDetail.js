@@ -37,7 +37,7 @@ export function PostDetail() {
   };
   return (
     <>
-      <div className="flex flex-col justify-center items-center max-w-screen-2xl">
+      <div className="flex flex-col justify-center items-center max-w-screen-2xl w-[70vw] m-auto">
         <main className="w-[60vw] overflow-auto">
           <Link to="/">
             <FiArrowLeft size={40} />

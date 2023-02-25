@@ -14,7 +14,7 @@ export default function Card({ data }) {
     <li
       onClick={handleClick}
       className="border-2 border-gray-400 rounded-3xl cursor-pointer
-                    hover:scale-105 duration-300 w-[21rem] h-[25rem] p-10 flex flex-col justify-between"
+                    hover:scale-105 duration-300 w-[19rem] h-[25rem] p-9 flex flex-col justify-between"
     >
       <div className="flex flex-col justify-center items-start gap-3 text-darkMode">
         <div className="opacity-50 mb-3 text-sm mt-3 ">등록날짜 | {getFormatDate(createdAt)}</div>

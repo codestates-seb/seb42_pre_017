@@ -12,9 +12,8 @@ export default function Page({pagenation,onPagenation}) {
         if(page === totalPages) return ;
         onPagenation({...pagenation,page:page+1})
     }
-    console.log(page);
     return (
-        <div className='flex justify-between w-full mt-5'>
+        <div className='flex justify-between w-full mt-5 flex-none'>
            <Buttons
             text={<AiOutlineArrowLeft
                 className='text-3xl'/>}

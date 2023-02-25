@@ -1,5 +1,4 @@
-import React from 'react';
-import Avatar from '@mui/material/Avatar';
+import React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -17,7 +16,7 @@ function Copyright(props) {
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
         {'Copyright © '}
         <Link color="inherit" href="https://mui.com/">
-          Your Website
+          My Overflow
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
@@ -28,9 +27,16 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function SignIn() {
+  const [ErrorBar,setErrorBar] = useState('모든항목을 작성해주세요')
     const handleSubmit = (event) => {
         event.preventDefault();
+        
         const data = new FormData(event.currentTarget);
+        if(data.data.get('email').trim().length === 0 ||
+        data.get('password').trim().length === 0) {
+          
+          return;
+        }
         console.log({
           email: data.get('email'),
           password: data.get('password'),
@@ -43,19 +49,21 @@ export default function SignIn() {
             <CssBaseline />
             <Box
               sx={{
+                width:'100%',
+                height:'100%',
                 marginTop: 8,
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-                
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                Sign in
-              </Typography>
-              <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+             
+              <h1 className='w-full text-center'>
+                <img src={"/images/logo.png"} alt="logo" className="w-[170px] inline-block " />
+                <span>에 오신것을 환영합니다 !</span>
+              </h1>
+             
+              <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 ,margin:0}}>
                 <TextField
                   margin="normal"
                   required
@@ -88,10 +96,11 @@ export default function SignIn() {
                 >
                   Sign In
                 </Button>
-                <Grid>
-                  
+                <Grid sx={{ mt: 3, mb: 2 }} >
+                  아직 회원이 아니신가요? <Link>회원가입</Link>
                 </Grid>
               </Box>
+              
             </Box>
             <Copyright sx={{ mt: 8, mb: 4 }} />
           </Container>

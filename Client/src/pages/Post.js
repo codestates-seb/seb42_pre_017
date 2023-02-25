@@ -27,7 +27,7 @@ export function Post() {
 
   return (
     <>
-      <main className="flex flex-col items-center m-[20px] max-w-screen-2xl">
+      <main className="flex flex-col items-center m-[20px] w-[70vw] m-auto">
         <form onSubmit={handleSubmit}>
           <div className="mb-5">
             <section className="flex">

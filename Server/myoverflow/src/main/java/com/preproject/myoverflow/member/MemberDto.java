@@ -5,10 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 
@@ -17,16 +14,17 @@ public class MemberDto {
     @Getter
     public static class Post{
         @NotBlank
+        @Email
         private String email;
+
+        @NotBlank
+        private String password;
 
         @NotBlank
         private String name;
 
         @NotBlank
         private String nickname;
-
-        @Positive
-        private long memberId;
     }
 
     @Setter

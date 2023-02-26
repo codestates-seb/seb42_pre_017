@@ -23,11 +23,17 @@ public class Member extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long memberId;
+
     @Email
     @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
+    private String password;
+
     @Column(nullable = false)
     private String name;
+
     @Column(nullable = false)
     private String nickname;
 
@@ -38,14 +44,13 @@ public class Member extends Auditable {
     @OneToMany(mappedBy = "member")
     private List<Answer> answers = new ArrayList<>();
 
-
-
-
-
+    @ElementCollection(fetch = FetchType.EAGER)
+    private List<String> roles = new ArrayList<>();
 
     @Enumerated(value = EnumType.STRING)
     @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
+
     public enum MemberStatus {
         MEMBER_ACTIVE("활동중"),
         MEMBER_SLEEP("휴면 상태"),

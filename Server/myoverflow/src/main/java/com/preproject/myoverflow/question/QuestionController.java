@@ -63,13 +63,13 @@ public class QuestionController {
                 new SingleResponseDto<>(mapper.questionToResponseDto(updatedQuestion)),HttpStatus.OK);
     }
 
-    @GetMapping("{question-id}")
-    public ResponseEntity getQuestion(@PathVariable("question-id") @Positive long questionId){
-        Question foundQuestion = service.getQuestion(questionId);
-        //Todo : ResponseEntity<> 랑 ResponseEntity 차이 ??
-        return new ResponseEntity(
-                new SingleResponseDto<>(mapper.questionToResponseDto(foundQuestion)), HttpStatus.OK);
-    }
+//    @GetMapping("{question-id}")
+//    public ResponseEntity getQuestion(@PathVariable("question-id") @Positive long questionId){
+//        Question foundQuestion = service.getQuestion(questionId);
+//        //Todo : ResponseEntity<> 랑 ResponseEntity 차이 ??
+//        return new ResponseEntity(
+//                new SingleResponseDto<>(mapper.questionToResponseDto(foundQuestion)), HttpStatus.OK);
+//    }
 
     @GetMapping
     public ResponseEntity getQuestions(@RequestParam List<String> category,

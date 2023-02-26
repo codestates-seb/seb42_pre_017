@@ -7,6 +7,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Home } from "./pages/Home";
 import { Post } from "./pages/Post";
 import { PostDetail } from "./pages/PostDetail";
+import { Setting } from "./pages/setting";
 
 const router = createBrowserRouter([
   {
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: "/postdetail/:id",
         element: <PostDetail />,
+      },
+      {
+        path: "/setting",
+        element: <Setting />,
       },
     ],
     errorElement: <div>error!!</div>,

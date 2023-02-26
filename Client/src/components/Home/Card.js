@@ -2,7 +2,6 @@ import React from "react";
 import { AiOutlineHeart } from "react-icons/ai";
 import { AiOutlineComment } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
-import { getFormatDate } from "../../util/data";
 import Stack from "./Stack";
 import * as dayjs from "dayjs";
 export default function Card({ data }) {

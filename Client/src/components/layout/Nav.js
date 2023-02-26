@@ -29,7 +29,7 @@ export default function Nav() {
         </ModalBackGround>
       )}
       <nav
-        className={`flex justify-between max-w-screen-2xl w-[70vw] h-0
+        className={`flex justify-between max-w-screen-2xl w-[90vw] h-0
                  m-auto p-3 relative items-center ${isOpen && "bg-fixed"}`}
       >
         <div className="flex">
@@ -52,7 +52,7 @@ export default function Nav() {
           >
             <FaRegUserCircle />
           </button>
-          {toggle && <MyPageDropDown onClick={handleModal} />}
+          {toggle && <MyPageDropDown handleModal={handleModal} />}
         </div>
       </nav>
     </div>

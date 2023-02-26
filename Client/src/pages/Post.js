@@ -6,23 +6,23 @@ import axios from "axios";
 import TextField from "@mui/material/TextField";
 import { useForm, Controller } from "react-hook-form";
 
-const categoryItems = [
-  { value: "Javascript", label: "Javascript" },
-  { value: "Typescript", label: "Typescript" },
-  { value: "React", label: "React" },
-  { value: "Java", label: "Java" },
-  { value: "Spring", label: "Spring" },
-];
-
 export function Post() {
   const navigate = useNavigate();
+
+  const categoryItems = [
+    { value: "Javascript", label: "Javascript" },
+    { value: "Typescript", label: "Typescript" },
+    { value: "React", label: "React" },
+    { value: "Java", label: "Java" },
+    { value: "Spring", label: "Spring" },
+  ];
 
   const {
     handleSubmit,
     formState: { errors },
     control,
   } = useForm({
-    mode: "onChange",
+    mode: "onSubmit",
     defaultValues: {
       title: "",
       stack: null,
@@ -31,8 +31,6 @@ export function Post() {
   });
 
   const onSubmit = data => {
-    //e.preventDefault();
-
     const newData = {
       memberId: 1,
       title: data.title,
@@ -40,7 +38,6 @@ export function Post() {
       content: data.content,
     };
 
-    console.log("newData", newData);
     axios.post(`http://3.36.120.221:8080/questions`, newData);
     alert("질문이 등록되었어요.");
     navigate("/");
@@ -48,7 +45,7 @@ export function Post() {
 
   return (
     <>
-      <main className="flex flex-col items-center m-[20px] w-[70vw] m-auto">
+      <main className="flex flex-col items-center w-[70vw] m-auto">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-5">
             <section className="flex">
@@ -58,20 +55,24 @@ export function Post() {
             <Controller
               name="title"
               control={control}
+              rules={{ required: "질문 제목은 필수 입력사항입니다." }}
               render={({ field: { value, onChange } }) => {
                 return (
-                  <TextField
-                    value={value}
-                    onChange={onChange}
-                    sx={{ width: "70vw" }}
-                    placeholder="질문 제목을 입력해주세요."
-                    control={control}
-                    name="title"
-                  />
+                  <>
+                    <input hidden="hidden" />
+                    <TextField
+                      value={value}
+                      onChange={onChange}
+                      sx={{ width: "70vw" }}
+                      placeholder="질문 제목을 입력해주세요."
+                      control={control}
+                      name="title"
+                    />
+                  </>
                 );
               }}
             />
-            {errors.title && <span className="text-red-500 text-[15px] m-3">{errors.title.message}</span>}
+            {errors.title && <span className="text-red-500 text-[15px] ml-3">{errors.title.message}</span>}
           </div>
           <div className="mb-5 flex flex-col">
             <section className="flex">
@@ -81,20 +82,23 @@ export function Post() {
             <Controller
               name="stack"
               control={control}
+              rules={{ required: "기술 스택은 필수 선택사항입니다." }}
               render={({ field: { value, onChange } }) => {
                 return (
-                  <DropDown
-                    value={value}
-                    onChange={onChange}
-                    sx={{ width: "70vw" }}
-                    displayEmpty
-                    items={categoryItems}
-                  />
+                  <>
+                    <input hidden="hidden" />
+                    <DropDown
+                      value={value}
+                      onChange={onChange}
+                      sx={{ width: "70vw" }}
+                      items={categoryItems}
+                      displayEmpty
+                    />
+                  </>
                 );
               }}
             />
-
-            {errors.stack && <span className="text-red-500 text-[15px] m-3">{errors.stack.message}</span>}
+            {errors.stack && <span className="text-red-500 text-[15px] ml-3">{errors.stack.message}</span>}
           </div>
           <div className="flex flex-col">
             <section className="flex">
@@ -104,29 +108,34 @@ export function Post() {
             <Controller
               name="content"
               control={control}
+              rules={{ required: "질문 내용은 필수 입력사항입니다." }}
               render={({ field: { value, onChange } }) => {
                 return (
-                  <TextField
-                    name="content"
-                    value={value}
-                    onChange={onChange}
-                    direction="row"
-                    className="w-[70vw]"
-                    sx={{
-                      width: "70vw",
-                      "& .MuiInputBase-root": {
-                        height: 500,
-                      },
-                    }}
-                    rows={20}
-                    placeholder="질문 내용을 입력해주세요."
-                    multiline
-                  />
+                  <>
+                    <input hidden="hidden" />
+                    <TextField
+                      name="content"
+                      value={value}
+                      onChange={onChange}
+                      direction="row"
+                      className="w-[70vw]"
+                      sx={{
+                        width: "70vw",
+                        "& .MuiInputBase-root": {
+                          height: 500,
+                        },
+                      }}
+                      rows={20}
+                      placeholder="질문 내용을 입력해주세요."
+                      multiline
+                      onClick={() => onSubmit()}
+                    />
+                  </>
                 );
               }}
             />
 
-            {/* {formState.errors.content && <span className="text-red-500 text-[15px] m-3">{errors.content.message}</span>} */}
+            {errors.content && <span className="text-red-500 text-[15px] ml-3">{errors.content.message}</span>}
             <div className="flex justify-end mt-5 mb-7">
               <Link to="/">
                 <Buttons

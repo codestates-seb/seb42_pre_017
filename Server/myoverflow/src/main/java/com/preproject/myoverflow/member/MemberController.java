@@ -29,7 +29,7 @@ public class MemberController {
     @PostMapping
     public ResponseEntity postMember(@Valid @RequestBody MemberDto.Post memberPost){
 
-        Member member = mapper.MemberPostToMember(memberPost); //MemberDto --> Member 이제우리는 Member만쓰면된다. 이걸로 로직처리한다.
+        Member member = mapper.MemberPostToMember(memberPost); //MemberDto --> Member 이제우리는 Member만쓰면된다. 이걸로 로직처리한다.dd
 
         Member createdMember = memberService.createMember(member);
 

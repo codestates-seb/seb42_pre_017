@@ -1,15 +1,31 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { logout } from '../../util/data';
 
-export default function MyPageDropDown({onClick}) {
+export default function MyPageDropDown({onClick,user,onToggle}) {
+  const handleLoginClick = () =>{
+    //실제데이터들어올때 한번더 검증하는 if문 붙일지말지 고민쓰
+    onClick()
+  }
+  const handleLogoutClick = () =>{
+    onToggle(prev=>!prev)
+    logout()
+  }
+  // console.log(user);
   return (
-    <ul className="absolute top-full right-[-15px] mt-1 z-10 bg-white p-1 text-lg ease-in-out">
+    <ul className="absolute top-full right-[-15px] mt-1 z-10 bg-white p-1 text-lg ">
       <li className='cursor-pointer'>내작성글</li>
       <li className='cursor-pointer'>설정</li>
+      {user ?
       <li
-       onClick={onClick}
+       onClick={handleLogoutClick}
        className='cursor-pointer'
        >로그아웃
-       </li>
+       </li>:
+       <li
+       onClick={handleLoginClick}
+       className='cursor-pointer'
+       >로그인
+       </li>}
     </ul>
   );
 }

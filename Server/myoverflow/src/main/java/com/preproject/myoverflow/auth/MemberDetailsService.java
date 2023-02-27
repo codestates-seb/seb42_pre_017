@@ -1,5 +1,6 @@
 package com.preproject.myoverflow.auth;
 
+import com.preproject.myoverflow.auth.utils.CustomAuthorityUtils;
 import com.preproject.myoverflow.member.Member;
 import com.preproject.myoverflow.member.MemberRepository;
 import org.springframework.security.core.GrantedAuthority;

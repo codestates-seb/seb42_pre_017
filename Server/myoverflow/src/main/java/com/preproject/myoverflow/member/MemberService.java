@@ -1,10 +1,9 @@
 package com.preproject.myoverflow.member;
 
-import com.preproject.myoverflow.auth.CustomAuthorityUtils;
+import com.preproject.myoverflow.auth.utils.CustomAuthorityUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.spec.OAEPParameterSpec;
 import java.util.List;
 import java.util.Optional;
 

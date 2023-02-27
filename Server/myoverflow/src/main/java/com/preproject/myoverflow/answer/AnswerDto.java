@@ -39,5 +39,7 @@ public class AnswerDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
         private String answerOpenStatus;
+        private String memberId;
+        private String nickname;
     }
 }

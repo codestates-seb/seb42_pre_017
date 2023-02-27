@@ -62,7 +62,7 @@ public class AnswerController {
     @GetMapping
     public ResponseEntity findQuestionAnswers(@Positive @RequestParam long questionId){
         List<Answer> foundAnswers = answerService.findAllAnswers(questionId);
-
+        foundAnswers.stream().forEach(a -> System.out.println(a.getMember().getMemberId()));
         return new ResponseEntity(
                 new SingleResponseDto<>(mapper.answerListToAnswerResponseDtos(foundAnswers)),HttpStatus.OK);
     }

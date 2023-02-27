@@ -17,6 +17,7 @@ import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/questions")
 @Validated

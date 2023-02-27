@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { RxBell } from "react-icons/rx";
 import { FaRegUserCircle } from "react-icons/fa";
 import { Link } from "react-router-dom";

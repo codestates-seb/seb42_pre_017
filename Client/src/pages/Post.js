@@ -1,25 +1,43 @@
 import Buttons from "../components/Post/Buttons";
 import DropDown from "../components/Post/DropDown";
-import Form from "../components/Post/Form";
 import { GoBook, GoDiffIgnored, GoThreeBars } from "react-icons/go";
 import { Link, useNavigate } from "react-router-dom";
-import { useState } from "react";
 import axios from "axios";
+import TextField from "@mui/material/TextField";
+import { useForm, Controller } from "react-hook-form";
 
 export function Post() {
   const navigate = useNavigate();
-  const [title, setTitle] = useState("");
-  const [stack, setStack] = useState([]);
-  const [content, setContent] = useState("");
 
-  const handleSubmit = e => {
-    e.preventDefault();
+  const categoryItems = [
+    { value: "Javascript", label: "Javascript" },
+    { value: "Typescript", label: "Typescript" },
+    { value: "React", label: "React" },
+    { value: "Java", label: "Java" },
+    { value: "Spring", label: "Spring" },
+  ];
+
+  const {
+    handleSubmit,
+    formState: { errors },
+    control,
+  } = useForm({
+    mode: "onSubmit",
+    defaultValues: {
+      title: "",
+      stack: null,
+      content: "",
+    },
+  });
+
+  const onSubmit = data => {
     const newData = {
       memberId: 1,
-      title,
-      category: stack,
-      content,
+      title: data.title,
+      category: [data.stack],
+      content: data.content,
     };
+
     axios.post(`http://3.36.120.221:8080/questions`, newData);
     alert("질문이 등록되었어요.");
     navigate("/");
@@ -27,46 +45,97 @@ export function Post() {
 
   return (
     <>
-      <main className="flex flex-col items-center m-[20px] w-[90vw] m-auto">
-        <form onSubmit={handleSubmit}>
+      <main className="flex flex-col items-center w-[70vw] m-auto">
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-5">
             <section className="flex">
               <GoBook size={24} />
               <span className="text-[20px] ml-[10px]">제목</span>
             </section>
-            <Form
-              sx={{ width: "70vw" }}
-              placeholder="질문 제목을 입력해주세요."
-              onChange={e => setTitle(e.target.value)}
-              value={title}
+            <Controller
+              name="title"
+              control={control}
+              rules={{ required: "질문 제목은 필수 입력사항입니다." }}
+              render={({ field: { value, onChange } }) => {
+                return (
+                  <>
+                    <input hidden="hidden" />
+                    <TextField
+                      value={value}
+                      onChange={onChange}
+                      sx={{ width: "70vw" }}
+                      placeholder="질문 제목을 입력해주세요."
+                      control={control}
+                      name="title"
+                    />
+                  </>
+                );
+              }}
             />
+            {errors.title && <span className="text-red-500 text-[15px] ml-3">{errors.title.message}</span>}
           </div>
           <div className="mb-5 flex flex-col">
             <section className="flex">
               <GoThreeBars size={24} />
               <span className="text-[20px] ml-[10px]">기술 스택</span>
             </section>
-            <DropDown sx={{ width: "70vw" }} displayEmpty setStack={setStack} stack={stack} />
+            <Controller
+              name="stack"
+              control={control}
+              rules={{ required: "기술 스택은 필수 선택사항입니다." }}
+              render={({ field: { value, onChange } }) => {
+                return (
+                  <>
+                    <input hidden="hidden" />
+                    <DropDown
+                      value={value}
+                      onChange={onChange}
+                      sx={{ width: "70vw" }}
+                      items={categoryItems}
+                      displayEmpty
+                    />
+                  </>
+                );
+              }}
+            />
+            {errors.stack && <span className="text-red-500 text-[15px] ml-3">{errors.stack.message}</span>}
           </div>
           <div className="flex flex-col">
             <section className="flex">
               <GoDiffIgnored size={24} />
               <span className="text-[20px] ml-[10px]">질문 내용</span>
             </section>
-            <Form
-              direction="row"
-              className="w-[70vw]"
-              sx={{
-                width: "70vw",
-                "& .MuiInputBase-root": {
-                  height: 500,
-                },
+            <Controller
+              name="content"
+              control={control}
+              rules={{ required: "질문 내용은 필수 입력사항입니다." }}
+              render={({ field: { value, onChange } }) => {
+                return (
+                  <>
+                    <input hidden="hidden" />
+                    <TextField
+                      name="content"
+                      value={value}
+                      onChange={onChange}
+                      direction="row"
+                      className="w-[70vw]"
+                      sx={{
+                        width: "70vw",
+                        "& .MuiInputBase-root": {
+                          height: 500,
+                        },
+                      }}
+                      rows={20}
+                      placeholder="질문 내용을 입력해주세요."
+                      multiline
+                      onClick={() => onSubmit()}
+                    />
+                  </>
+                );
               }}
-              rows={20}
-              onChange={e => setContent(e.target.value)}
-              value={content}
-              placeholder="질문 내용을 입력해주세요."
             />
+
+            {errors.content && <span className="text-red-500 text-[15px] ml-3">{errors.content.message}</span>}
             <div className="flex justify-end mt-5 mb-7">
               <Link to="/">
                 <Buttons

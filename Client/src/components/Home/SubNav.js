@@ -3,7 +3,7 @@ import Stack from './Stack';
 export default function SubNav({text,onFilter,filter,onClick,click}) {
     const isAll = text === '전체'
     const [toggle,setToggle] = useState(isAll ? true :false)
-    const handleClick = () => {
+const handleClick = () => {
     onFilter(text)
     if(toggle) {
         setToggle(!toggle)

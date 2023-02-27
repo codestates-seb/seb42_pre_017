@@ -3,42 +3,42 @@ import { getAllData, getCategoryData } from "../../util/data";
 import Card from "./Card";
 import SubNav from "./SubNav";
 import Page from "./Page";
-import PopularTap from './PopularTap';
-const filteredTap = ['Javascript','Typescript','React','Java','Spring'];
+import PopularTap from "./PopularTap";
+const filteredTap = ["Javascript", "Typescript", "React", "Java", "Spring"];
 export default function CardLists() {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState("전체");
   const [pagenation, setPagenation] = useState({
-  page:1,
-  totalElements:0,
-  totalPages:0
+    page: 1,
+    totalElements: 0,
+    totalPages: 0,
   });
-  const [click,setClick] = useState([])
+  const [click, setClick] = useState([]);
   useEffect(() => {
-    const stack = click.join(',')
-    if (filter  === "전체") {
+    const stack = click.join(",");
+    if (filter === "전체") {
       getAllData(pagenation.page)
         .then(res => {
-          setData(res.data)
+          setData(res.data);
           setPagenation({
-            page:res.pageInfo.page,
-            totalElements:res.pageInfo.totalElements,
-            totalPages:res.pageInfo.totalPages
-          })
+            page: res.pageInfo.page,
+            totalElements: res.pageInfo.totalElements,
+            totalPages: res.pageInfo.totalPages,
+          });
         })
-        .catch(err => console.log(err));   
-    } else {
-      getCategoryData(pagenation.page,stack)
-        .then(res => {
-          setData(res.data)
-          setPagenation({
-            page:res.pageInfo.page,
-            totalElements:res.pageInfo.totalElements,
-            totalPages:res.pageInfo.totalPages
-          })
-      })
         .catch(err => console.log(err));
-      console.log( data);
+    } else {
+      getCategoryData(pagenation.page, stack)
+        .then(res => {
+          setData(res.data);
+          setPagenation({
+            page: res.pageInfo.page,
+            totalElements: res.pageInfo.totalElements,
+            totalPages: res.pageInfo.totalPages,
+          });
+        })
+        .catch(err => console.log(err));
+      console.log(data);
     }
   }, [filter, pagenation.page,click]);
   return (
@@ -48,15 +48,15 @@ export default function CardLists() {
       <nav className="gap-6 mb-10 flex">
         {filteredTap.map((text, idx) => (
           <SubNav
-           key={idx}
-           data={data}
-           onData={setData}
-           text={text}
-           filter={filter}
-           onFilter={setFilter}
-           onClick={setClick}
-           click={click}
-           />
+            key={idx}
+            data={data}
+            onData={setData}
+            text={text}
+            filter={filter}
+            onFilter={setFilter}
+            onClick={setClick}
+            click={click}
+          />
         ))}
       </nav>
       <div className='h-[70vh] flex flex-col'>

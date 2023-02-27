@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 
 public class AnswerDto {
     @Getter
-    public class Post {
+    public static class Post {
         @NotBlank(message = "답변을 작성해 주세요")
         private String content;
 

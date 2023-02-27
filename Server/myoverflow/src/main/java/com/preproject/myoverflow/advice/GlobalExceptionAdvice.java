@@ -15,6 +15,7 @@ public class GlobalExceptionAdvice {
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST) //Post에서 전송되는 데이터에 대한 유효성 검증 에러 처리
+
     public ErrorResponse handleMethodArgumentNotValidException(
             MethodArgumentNotValidException e){
         final ErrorResponse response = ErrorResponse.of(e.getBindingResult());

@@ -44,6 +44,7 @@ public class AnswerService {
     }
 
     public void deleteAnswer(long answerId){
+        answerRepository.deleteById(answerId);
     }
 
     //Todo : findVerified로 존재하는 questionId인지 확인

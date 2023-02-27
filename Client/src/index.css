@@ -24,4 +24,11 @@ body {
 .slice-list {
   height: 20rem;
 }
+.textField-radius fieldset{
+  border-radius: 20rem;
+  
+}
+.list{
+  flex: 1 1 auto;
+}
 

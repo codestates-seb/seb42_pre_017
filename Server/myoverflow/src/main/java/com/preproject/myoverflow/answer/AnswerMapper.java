@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
-
+//11
 @Mapper(componentModel = "spring")
 public interface AnswerMapper {
     default Answer answerPostDtoToAnswer(AnswerDto.Post answerPostDto){

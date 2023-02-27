@@ -1,6 +1,5 @@
 package com.preproject.myoverflow.auth;
 
-
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
@@ -21,37 +20,35 @@ import java.util.Map;
 public class JwtTokenizer {
     @Getter
     @Value("${jwt.key}")
-    private String secretKey;       // (2)
+    private String secretKey;
 
     @Getter
     @Value("${jwt.access-token-expiration-minutes}")
-    private int accessTokenExpirationMinutes;        // (3)
+    private int accessTokenExpirationMinutes;
 
     @Getter
     @Value("${jwt.refresh-token-expiration-minutes}")
-    private int refreshTokenExpirationMinutes;          // (4)
-    // (1)
+    private int refreshTokenExpirationMinutes;
+
     public String encodeBase64SecretKey(String secretKey) {
         return Encoders.BASE64.encode(secretKey.getBytes(StandardCharsets.UTF_8));
     }
 
-    // (2)
     public String generateAccessToken(Map<String, Object> claims,
                                       String subject,
                                       Date expiration,
                                       String base64EncodedSecretKey) {
-        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey); // (2-1)
+        Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
         return Jwts.builder()
-                .setClaims(claims)          // (2-2)
-                .setSubject(subject)        // (2-3)
-                .setIssuedAt(Calendar.getInstance().getTime())   // (2-4)
-                .setExpiration(expiration)  // (2-5)
-                .signWith(key)              // (2-6)
-                .compact();                 // (2-7)
+                .setClaims(claims)
+                .setSubject(subject)
+                .setIssuedAt(Calendar.getInstance().getTime())
+                .setExpiration(expiration)
+                .signWith(key)
+                .compact();
     }
 
-    // (3)
     public String generateRefreshToken(String subject, Date expiration, String base64EncodedSecretKey) {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
@@ -63,6 +60,7 @@ public class JwtTokenizer {
                 .compact();
     }
 
+    // 검증 후, Claims을 반환 하는 용도
     public Jws<Claims> getClaims(String jws, String base64EncodedSecretKey) {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
@@ -73,13 +71,14 @@ public class JwtTokenizer {
         return claims;
     }
 
+    // 단순히 검증만 하는 용도로 쓰일 경우
     public void verifySignature(String jws, String base64EncodedSecretKey) {
         Key key = getKeyFromBase64EncodedKey(base64EncodedSecretKey);
 
         Jwts.parserBuilder()
-                .setSigningKey(key)     // (1)
+                .setSigningKey(key)
                 .build()
-                .parseClaimsJws(jws);   // (2)
+                .parseClaimsJws(jws);
     }
 
     public Date getTokenExpiration(int expirationMinutes) {
@@ -90,11 +89,9 @@ public class JwtTokenizer {
         return expiration;
     }
 
-
-    // (4)
     private Key getKeyFromBase64EncodedKey(String base64EncodedSecretKey) {
-        byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);  // (4-1)
-        Key key = Keys.hmacShaKeyFor(keyBytes);    // (4-2)
+        byte[] keyBytes = Decoders.BASE64.decode(base64EncodedSecretKey);
+        Key key = Keys.hmacShaKeyFor(keyBytes);
 
         return key;
     }

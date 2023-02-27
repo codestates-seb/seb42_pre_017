@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.net.URI;
 
+@CrossOrigin
 @RestController // www.codestats.com/members/1
 @RequestMapping("/members")
 @Validated

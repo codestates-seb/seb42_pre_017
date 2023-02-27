@@ -13,18 +13,21 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     private final PasswordEncoder passwordEncoder;
+
     private final CustomAuthorityUtils authorityUtils;
 
-    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils customAuthorityUtils){
+    public MemberService(MemberRepository memberRepository,
+                         PasswordEncoder passwordEncoder,
+                         CustomAuthorityUtils authorityUtils){
+        this.authorityUtils = authorityUtils;
         this.passwordEncoder = passwordEncoder;
-        this.authorityUtils = customAuthorityUtils;
         this.memberRepository = memberRepository;
     }
 
 
     public Member createMember(Member member){
-        String encryptedPassword = passwordEncoder.encode(member.getPassword());
-        member.setPassword(encryptedPassword);
+        String encrtptedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encrtptedPassword);
 
         List<String> roles = authorityUtils.createRoles(member.getEmail());
         member.setRoles(roles);

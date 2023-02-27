@@ -2,6 +2,7 @@ package com.preproject.myoverflow.answer;
 
 import com.preproject.myoverflow.answer.Answer;
 import com.preproject.myoverflow.answer.AnswerRepository;
+import com.preproject.myoverflow.member.Member;
 import com.preproject.myoverflow.question.QuestionService;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -48,5 +49,4 @@ public class AnswerService {
     }
 
     //Todo : findVerified로 존재하는 questionId인지 확인
-
 }

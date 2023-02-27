@@ -1,7 +1,7 @@
 import Buttons from "../components/Post/Buttons";
 import DropDown from "../components/Post/DropDown";
 import { VscAccount } from "react-icons/vsc";
-import { GoBook, GoThreeBars } from "react-icons/go";
+import { GoThreeBars } from "react-icons/go";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
@@ -35,18 +35,17 @@ export function Setting() {
   const onSubmit = data => {
     const newData = {
       memberId: 1,
-      title: data.title,
+      nickname: data.nickname,
       category: [data.stack],
-      content: data.content,
     };
 
-    axios.post(`http://3.36.120.221:8080/questions`, newData);
-    alert("질문이 등록되었어요.");
+    // axios.post(`http://13.209.121.17:8080/questions`, newData);
+    alert("회원 정보가 수정되었습니다.");
     navigate("/");
   };
 
   return (
-    <main className="flex flex-col items-center w-[70vw] m-auto">
+    <main className="flex flex-col items-center">
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mt-10 mb-5">
           <h1 className="text-[40px] mb-10 font-bold">회원 정보 수정</h1>
@@ -86,26 +85,25 @@ export function Setting() {
             <span className="text-[20px] ml-[10px]">닉네임</span>
           </section>
           <Controller
-            name="title"
+            name="nickname"
             control={control}
             rules={{ required: "변경할 닉네임을 입력해주세요." }}
             render={({ field: { value, onChange } }) => {
               return (
                 <>
-                  <input hidden="hidden" />
                   <TextField
                     value={value}
                     onChange={onChange}
                     sx={{ width: "70vw" }}
                     placeholder="My Overflow에서 사용할 닉네임을 입력해주세요."
                     control={control}
-                    name="title"
+                    name="nickname"
                   />
                 </>
               );
             }}
           />
-          {errors.title && <span className="text-red-500 text-[15px] ml-3">{errors.title.message}</span>}
+          {errors.nickname && <div className="text-red-500 text-[15px] ml-3">{errors.nickname.message}</div>}
         </div>
 
         <div className="mt-10 mb-5 flex flex-col">

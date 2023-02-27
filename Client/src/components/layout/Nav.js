@@ -22,15 +22,15 @@ export default function Nav() {
   };
   console.log(userMenu.current);
   return (
-    <div className="m-10">
+    <div className="m-10 flex justify-center">
       {isOpen && (
         <ModalBackGround onClose={handleCloseModal} userRef={userMenu}>
           <Modal children={<SignIn />} onClose={setIsOpen} />
         </ModalBackGround>
       )}
       <nav
-        className={`flex justify-between max-w-screen-2xl w-[90vw] h-0
-                 m-auto p-3 relative items-center ${isOpen && "bg-fixed"}`}
+        className={`flex justify-between w-[90vw] h-0
+                 p-3 relative items-center ${isOpen && "bg-fixed"}`}
       >
         <div className="flex">
           <Link to="/" className="cursor-pointer">

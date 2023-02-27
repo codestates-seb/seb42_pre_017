@@ -9,21 +9,22 @@ import { useEffect, useState } from "react";
 import { getAnswerData } from "../util/data";
 import TextField from "@mui/material/TextField";
 import axios from "axios";
+import { SlOptionsVertical } from "react-icons/sl";
 import * as dayjs from "dayjs";
 
 export function PostDetail() {
   const [answerData, setAnswerData] = useState([]);
   const [userAnswerInput, setUserAnswerInput] = useState("");
   const [isLike, setIsLike] = useState(false);
-  console.log(useLocation(), useLocation().state);
   const { data } = useLocation().state;
+  const [isLogin, setIsLogin] = useState(true);
   const { category, content, createdAt, nickname, likeCount, title, answerCount } = data;
-  console.log(data);
+  // console.log(data);
   useEffect(() => {
     getAnswerData().then(res => setAnswerData(res));
   }, []);
   const handleSubmit = e => {
-    const baseUrl = "http://3.36.120.221:8080/answers";
+    const baseUrl = "http://13.209.121.17:8080/answers";
     const newAnswer = {
       answerId: 1005,
       content: userAnswerInput,
@@ -38,6 +39,11 @@ export function PostDetail() {
     alert("답변이 등록되었어요.");
     setUserAnswerInput("");
   };
+
+  const handleOptionButtonClick = () => {
+    alert("선택");
+  };
+
   return (
     <>
       <div className="flex flex-col justify-center items-center max-w-screen-2xl w-[70vw] m-auto">
@@ -55,6 +61,7 @@ export function PostDetail() {
                 {el}
               </span>
             ))}
+            {isLogin && <SlOptionsVertical size={25} onClick={handleOptionButtonClick} />}
           </section>
           <div className="w-[60vw] border-solid border-[2px] mb-[20px]" />
           <article className="text-xl h-auto pt-[20px] pb-[20px] leading-10">{content}</article>

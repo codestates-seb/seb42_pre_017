@@ -84,6 +84,11 @@ public class QuestionController {
                 service.getQuestions(page - 1,size) :
                 service.getQuestions(category, page - 1, size);
         List<Question> questions = pageQuestions.getContent();
+        System.out.println("*".repeat(70));
+
+        System.out.println(questions.get(0).getMember().getMemberId());
+        System.out.println(questions.get(0).getMember().getNickname());
+
         return new ResponseEntity(
                 new MultiResponseDto<>(
                         mapper.questionsToResponseDtos(questions), pageQuestions), HttpStatus.OK);

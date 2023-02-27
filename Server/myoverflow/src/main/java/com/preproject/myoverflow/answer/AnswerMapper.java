@@ -28,7 +28,10 @@ public interface AnswerMapper {
 
     Answer answerPatchDtoToAnswer(AnswerDto.Patch answerPatchDto);
     @Mapping(source = "answerOpenStatus.status",  target = "answerOpenStatus")
+    @Mapping(source = "member.memberId",  target = "memberId")
+    @Mapping(source = "member.nickname",  target = "nickname")
     AnswerDto.Response answerToAnswerResponseDto(Answer answer);
 
+    @Mapping(source = "answerOpenStatus.status",  target = "answerOpenStatus")
     List<AnswerDto.Response> answerListToAnswerResponseDtos(List<Answer> answers);
 }

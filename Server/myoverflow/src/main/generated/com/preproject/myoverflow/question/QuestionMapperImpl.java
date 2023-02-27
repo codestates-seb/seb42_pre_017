@@ -1,9 +1,9 @@
 package com.preproject.myoverflow.question;
 
+import com.preproject.myoverflow.member.Member;
 import com.preproject.myoverflow.question.Question.QuestionAnswerStatus;
 import com.preproject.myoverflow.question.Question.QuestionOpenStatus;
 import com.preproject.myoverflow.question.QuestionDto.Patch;
-import com.preproject.myoverflow.question.QuestionDto.Post;
 import com.preproject.myoverflow.question.QuestionDto.Response;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,33 +13,11 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-<<<<<<< HEAD
-    date = "2023-02-22T15:56:54+0900",
-=======
-    date = "2023-02-21T11:33:20+0900",
->>>>>>> 1ac39782a8c0df2fc1e6fd53987bc9daf1cca345
+    date = "2023-02-28T02:12:14+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
 public class QuestionMapperImpl implements QuestionMapper {
-
-    @Override
-    public Question questionPostDtoToQuestion(Post post) {
-        if ( post == null ) {
-            return null;
-        }
-
-        Question question = new Question();
-
-        question.setTitle( post.getTitle() );
-        question.setContent( post.getContent() );
-        List<String> list = post.getCategory();
-        if ( list != null ) {
-            question.setCategory( new ArrayList<String>( list ) );
-        }
-
-        return question;
-    }
 
     @Override
     public Question questionPatchDtoToQuestion(Patch patch) {
@@ -70,6 +48,8 @@ public class QuestionMapperImpl implements QuestionMapper {
 
         String questionAnswerStatus = null;
         String questionOpenStatus = null;
+        Long memberId = null;
+        String nickname = null;
         List<String> category = null;
         String questionId = null;
         String title = null;
@@ -79,6 +59,8 @@ public class QuestionMapperImpl implements QuestionMapper {
 
         questionAnswerStatus = questionQuestionAnswerStatusStatus( question );
         questionOpenStatus = questionQuestionOpenStatusStatus( question );
+        memberId = questionMemberMemberId( question );
+        nickname = questionMemberNickname( question );
         List<String> list = question.getCategory();
         if ( list != null ) {
             category = new ArrayList<String>( list );
@@ -89,8 +71,6 @@ public class QuestionMapperImpl implements QuestionMapper {
         createdAt = question.getCreatedAt();
         modifiedAt = question.getModifiedAt();
 
-        Long memberId = null;
-        String nickname = null;
         int likeCount = 0;
         int answerCount = 0;
 
@@ -141,5 +121,32 @@ public class QuestionMapperImpl implements QuestionMapper {
             return null;
         }
         return status;
+    }
+
+    private Long questionMemberMemberId(Question question) {
+        if ( question == null ) {
+            return null;
+        }
+        Member member = question.getMember();
+        if ( member == null ) {
+            return null;
+        }
+        long memberId = member.getMemberId();
+        return memberId;
+    }
+
+    private String questionMemberNickname(Question question) {
+        if ( question == null ) {
+            return null;
+        }
+        Member member = question.getMember();
+        if ( member == null ) {
+            return null;
+        }
+        String nickname = member.getNickname();
+        if ( nickname == null ) {
+            return null;
+        }
+        return nickname;
     }
 }

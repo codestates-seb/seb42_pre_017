@@ -14,9 +14,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@NoArgsConstructor
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
 @Entity
 public class Member extends Auditable {
@@ -25,7 +25,7 @@ public class Member extends Auditable {
     private long memberId;
 
     @Email
-    @Column(nullable = false)
+    @Column(nullable = false, updatable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
@@ -48,7 +48,6 @@ public class Member extends Auditable {
     private List<String> roles = new ArrayList<>();
 
     @Enumerated(value = EnumType.STRING)
-    @Column(length = 20, nullable = false)
     private MemberStatus memberStatus = MemberStatus.MEMBER_ACTIVE;
 
     public enum MemberStatus {

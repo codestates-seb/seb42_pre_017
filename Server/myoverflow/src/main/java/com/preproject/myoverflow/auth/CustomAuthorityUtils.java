@@ -1,4 +1,4 @@
-package com.preproject.myoverflow.auth.utils;
+package com.preproject.myoverflow.auth;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.GrantedAuthority;

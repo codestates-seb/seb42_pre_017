@@ -1,4 +1,4 @@
-package com.preproject.myoverflow.auth.dto;
+package com.preproject.myoverflow.auth;
 
 import lombok.Getter;
 

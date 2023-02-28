@@ -14,29 +14,24 @@ public class MemberDto {
     @Getter
     public static class Post{
         @NotBlank
-        @Email
+        @Email //목요일 시간나면 이메일 인증 구현
         private String email;
 
-        @NotBlank
+        @NotBlank //길디 : 8자리 이상, 특수문자 포함, 한글안됨
         private String password;
 
-        @NotBlank
-        private String name;
-
-        @NotBlank
+        @NotBlank //길이 : 2글자 이상
         private String nickname;
     }
 
     @Setter
     public static class Patch{
-        @NotEmpty
-        private String email;
-
-        @NotEmpty
-        private String name;
-
-        @NotNull
+        //@NotSpace 구현
+        //길이 : 2글자 이상
         private String nickname;
+
+        //길디 : 8자리 이상, 특수문자 포함, 한글안됨
+        private String password;
 
         @Positive
         private long memberId;
@@ -49,7 +44,6 @@ public class MemberDto {
     public static class Response{
         private long memberId;
         private String email;
-        private String name;
         private String nickname;
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;

@@ -2,6 +2,11 @@ package com.preproject.myoverflow.member;
 
 //import com.preproject.myoverflow.auth.utils.CustomAuthorityUtils;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import com.preproject.myoverflow.exception.BusinessLogicException;
+import com.preproject.myoverflow.exception.ExceptionCode;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +31,7 @@ public class MemberService {
 
 
     public Member createMember(Member member){
+        verifyExistsEmail(member.getEmail());
 //        String encrtptedPassword = passwordEncoder.encode(member.getPassword());
 //        member.setPassword(encrtptedPassword);
 //
@@ -36,22 +42,45 @@ public class MemberService {
         return createdMember;
     }
 
+    public Member updateMember(Member member){
+        Member foundMember = findVerifiedMember(member.getMemberId());
+        Optional.ofNullable(member.getNickname())
+                .ifPresent(nickname -> foundMember.setNickname(nickname));
+        Optional.ofNullable(member.getPassword())
+                .ifPresent(password -> foundMember.setPassword(password));
+        Optional.ofNullable(member.getMemberStatus())
+                .ifPresent(memberStatus -> foundMember.setMemberStatus(memberStatus));
+        Member updateMember = memberRepository.save(member);
+        return updateMember;
+    }
+
+
     public Member findMember(long memberId){
         return findVerifiedMember(memberId);
     }
 
+    public Page<Member> findMembers(int page, int size) {
+        return memberRepository.findAll(PageRequest.of(page, size,
+                Sort.by("memberId").descending()));
+    }
 
-
-//    public Member updateMember(Member member){
-//        Member updateMember = repository.save(member);
-//        return updateMember;
-//    }
+    public void deleteMember(long memberId){
+        Member foundMember = findVerifiedMember(memberId);
+        foundMember.setMemberStatus(Member.MemberStatus.MEMBER_QUIT);
+        memberRepository.save(foundMember);
+//        memberRepository.deleteById(memberId);
+    }
 
     public Member findVerifiedMember(long memberId){
         Optional<Member> optionalMember = memberRepository.findById(memberId);
-        Member findMember = optionalMember.orElseThrow(()->null);
-        return findMember;
+        Member foundMember = optionalMember.orElseThrow(()->null);
+        return foundMember;
     }
 
+    private void verifyExistsEmail(String email) {
+        Optional<Member> member = memberRepository.findByEmail(email);
+        if (member.isPresent())
+            throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
+    }
 
 }

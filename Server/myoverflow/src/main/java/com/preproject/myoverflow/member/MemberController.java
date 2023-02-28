@@ -44,36 +44,29 @@ public class MemberController {
 //        return ResponseEntity.created(location).build();
     }
     //
-//    @PatchMapping("{member-id}")
-//    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
-//                                        @Valid @RequestBody MemberDto.Patch memberPatch){
-//        memberPatch.setMemberId(memberId);
-//
-//        Member member = mapper.MemberPatchToMember(memberPatch);
-//        Member updateMember = service.updateMember(member);
-//        return new ResponseEntity<>(mapper.MemberToMemberResponseDto(updateMember), HttpStatus.OK);
-//
-//    }
-//
+    @PatchMapping("{member-id}")
+    public ResponseEntity patchMember(@PathVariable("member-id") @Positive long memberId,
+                                        @Valid @RequestBody MemberDto.Patch memberPatch){
+        memberPatch.setMemberId(memberId);
+
+        Member member = mapper.MemberPatchToMember(memberPatch);
+        Member updateMember = memberService.updateMember(member);
+        return new ResponseEntity<>(mapper.MemberToMemberResponseDto(updateMember), HttpStatus.OK);
+
+    }
+
     @GetMapping("{member-id}")
     public ResponseEntity getMember(@PathVariable("member-id") @Positive long memberId){
         Member response = memberService.findMember(memberId);
         return new ResponseEntity<>(mapper.MemberToMemberResponseDto(response), HttpStatus.OK);
     }
-//
-//    @GetMapping
-//    public ResponseEntity getQuestions(){
-//
-//    }
-//
-//    @GetMapping("{stack}")//Todo 다중스택 가능??
-//    public ResponseEntity getQuestionsByStack(@PathVariable("stack") String stack){
-//
-//    }
-//
-//    @DeleteMapping("{question-id}")
-//    public ResponseEntity deleteQuestion(@PathVariable("question-id") @Positive long questionId){
-//
-//    }
+
+    @DeleteMapping("/{member-id}")
+    public ResponseEntity deleteMember(
+            @PathVariable("member-id") @Positive long memberId) {
+        memberService.deleteMember(memberId);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 
 }

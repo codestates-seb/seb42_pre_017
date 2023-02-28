@@ -27,8 +27,11 @@ public class AnswerDto {
     public static class Patch {
         private long answerId;
 
-        @NotBlank(message = "답변을 작성해 주세요")
+        //null or 유의미한 값만 받기
         private String content;
+
+        @Positive
+        private long memberId;
     }
 
     @AllArgsConstructor

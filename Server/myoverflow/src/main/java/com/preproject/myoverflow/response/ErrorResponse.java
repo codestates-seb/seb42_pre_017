@@ -13,10 +13,13 @@ import java.util.stream.Collectors;
 
 @Getter
 public class ErrorResponse {
-    private int status;
+
+    private Integer status;
+
     private String message;
     private List<FieldError> fieldErrors;
     private List<ConstraintViolationError> violationErrors;
+
 
     private ErrorResponse(int status, String message) {
         this.status = status;
@@ -37,6 +40,7 @@ public class ErrorResponse {
     public static ErrorResponse of(Set<ConstraintViolation<?>> violations){
         return new ErrorResponse(null, ConstraintViolationError.of(violations));
     }
+
 
     public static ErrorResponse of(ExceptionCode exceptionCode) {
         return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage());

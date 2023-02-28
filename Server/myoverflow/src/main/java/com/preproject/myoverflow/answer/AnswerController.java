@@ -46,10 +46,6 @@ public class AnswerController {
 
         Answer response =
                 answerService.updateAnswer(mapper.answerPatchDtoToAnswer(answerPatchDto));
-        System.out.println("*".repeat(70));
-        System.out.println(response.getQuestion().getTitle());
-        System.out.println(response.getQuestion().getContent());
-        System.out.println(response.getQuestion().getQuestionOpenStatus());
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.answerToAnswerResponseDto(response)), HttpStatus.OK);
     }
 

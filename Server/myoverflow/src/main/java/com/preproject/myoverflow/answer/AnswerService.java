@@ -2,7 +2,10 @@ package com.preproject.myoverflow.answer;
 
 import com.preproject.myoverflow.answer.Answer;
 import com.preproject.myoverflow.answer.AnswerRepository;
+import com.preproject.myoverflow.exception.BusinessLogicException;
+import com.preproject.myoverflow.exception.ExceptionCode;
 import com.preproject.myoverflow.member.Member;
+import com.preproject.myoverflow.member.MemberService;
 import com.preproject.myoverflow.question.Question;
 import com.preproject.myoverflow.question.QuestionService;
 import org.springframework.data.domain.Sort;
@@ -22,14 +25,17 @@ public class AnswerService {
 
     private QuestionService questionService;
 
-    public AnswerService(AnswerRepository answerRepository, QuestionService questionService) {
+    private MemberService memberService;
+
+    public AnswerService(AnswerRepository answerRepository, QuestionService questionService, MemberService memberService) {
         this.answerRepository = answerRepository;
         this.questionService = questionService;
+        this.memberService = memberService;
     }
 
     public Answer findAnswer(long answerId){
-
-        return answerRepository.findById(answerId).orElse(null);
+        return findVerifiedAnswer(answerId);
+//        return answerRepository.findById(answerId).orElse(null);
     }
 
     public List<Answer> findAllAnswers(long questionId){
@@ -46,7 +52,7 @@ public class AnswerService {
     }
 
     public Answer updateAnswer(Answer answer){
-        Answer foundAnswer = answerRepository.findById(answer.getAnswerId()).orElse(null);
+        Answer foundAnswer = findVerifiedAnswer(answer.getAnswerId());
         Optional.ofNullable(answer.getContent()).ifPresent(content -> foundAnswer.setContent(content));
         foundAnswer.setModifiedAt(LocalDateTime.now());
         return answerRepository.save(foundAnswer);
@@ -61,5 +67,15 @@ public class AnswerService {
         answerRepository.deleteById(answerId);
     }
 
-    //Todo : findVerified로 존재하는 questionId인지 확인
+    //Todo : findVerified로 존재하는 questionId인지 확인ㅇㅇ
+
+    public Answer findVerifiedAnswer(long answerId) {
+        Optional<Answer> optionalAnswer =
+                answerRepository.findById(answerId);
+        Answer findAnswer =
+                optionalAnswer.orElse(null);
+                        /*orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND));*/
+        return findAnswer;
+    }
 }

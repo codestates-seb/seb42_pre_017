@@ -30,8 +30,7 @@ public class AnswerDto {
         //null or 유의미한 값만 받기
         private String content;
 
-        @Positive
-        private long memberId;
+        private String memberId;
     }
 
     @AllArgsConstructor

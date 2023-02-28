@@ -52,12 +52,7 @@ public class QuestionController {
     @PatchMapping("{question-id}")
     public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long questionId,
                                          @RequestBody QuestionDto.Patch requestBody){
-        requestBody.setQuestionId(questionId);
-        System.out.println(requestBody.getQuestionAnswerStatus());
-        System.out.println(requestBody.getQuestionOpenStatus());
         Question question = mapper.questionPatchDtoToQuestion(requestBody);
-        System.out.println("*".repeat(70));
-        System.out.println(question.getQuestionOpenStatus());
         Question updatedQuestion = service.updateQuestion(question);
 
         return new ResponseEntity<>(
@@ -76,18 +71,11 @@ public class QuestionController {
     public ResponseEntity getQuestions(@RequestParam List<String> category,
                                        @Positive @RequestParam int page,
                                        @Positive @RequestParam int size){
-        System.out.println("*".repeat(75));
-        category.stream().forEach(a -> System.out.println(a));
-//        Page<Question> pageQuestions = service.getQuestions(page - 1,size);
 
                         Page<Question> pageQuestions = category.isEmpty()?
                 service.getQuestions(page - 1,size) :
                 service.getQuestions(category, page - 1, size);
         List<Question> questions = pageQuestions.getContent();
-        System.out.println("*".repeat(70));
-
-        System.out.println(questions.get(0).getMember().getMemberId());
-        System.out.println(questions.get(0).getMember().getNickname());
 
         return new ResponseEntity(
                 new MultiResponseDto<>(

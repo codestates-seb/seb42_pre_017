@@ -14,6 +14,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Positive;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/answers")
 @Validated
@@ -45,10 +46,6 @@ public class AnswerController {
 
         Answer response =
                 answerService.updateAnswer(mapper.answerPatchDtoToAnswer(answerPatchDto));
-        System.out.println("*".repeat(70));
-        System.out.println(response.getQuestion().getTitle());
-        System.out.println(response.getQuestion().getContent());
-        System.out.println(response.getQuestion().getQuestionOpenStatus());
         return new ResponseEntity<>(new SingleResponseDto<>(mapper.answerToAnswerResponseDto(response)), HttpStatus.OK);
     }
 
@@ -61,7 +58,7 @@ public class AnswerController {
     @GetMapping
     public ResponseEntity findQuestionAnswers(@Positive @RequestParam long questionId){
         List<Answer> foundAnswers = answerService.findAllAnswers(questionId);
-
+        foundAnswers.stream().forEach(a -> System.out.println(a.getMember().getMemberId()));
         return new ResponseEntity(
                 new SingleResponseDto<>(mapper.answerListToAnswerResponseDtos(foundAnswers)),HttpStatus.OK);
     }

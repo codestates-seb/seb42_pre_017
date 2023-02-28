@@ -29,6 +29,8 @@ public class AnswerDto {
 
         @NotBlank(message = "답변을 작성해 주세요")
         private String content;
+
+        private String memberId;
     }
 
     @AllArgsConstructor
@@ -39,5 +41,7 @@ public class AnswerDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
         private String answerOpenStatus;
+        private String memberId;
+        private String nickname;
     }
 }

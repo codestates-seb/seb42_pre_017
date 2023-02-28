@@ -7,30 +7,33 @@ import { Link, useLocation } from "react-router-dom";
 import { FcLikePlaceholder, FcLike } from "react-icons/fc";
 import { useEffect, useState } from "react";
 import { getAnswerData } from "../util/data";
-import Form from "../components/Post/Form";
+import TextField from "@mui/material/TextField";
 import axios from "axios";
+import * as dayjs from "dayjs";
+
 export function PostDetail() {
   const [answerData, setAnswerData] = useState([]);
   const [userAnswerInput, setUserAnswerInput] = useState("");
   const [isLike, setIsLike] = useState(false);
+  console.log(useLocation(), useLocation().state);
   const { data } = useLocation().state;
-  const { cartegory, content, createdAT, nickname, questionLike, title, answerCount } = data;
+  const { category, content, createdAt, nickname, likeCount, title, answerCount } = data;
+  console.log(data);
   useEffect(() => {
     getAnswerData().then(res => setAnswerData(res));
   }, []);
   const handleSubmit = e => {
-    const baseUrl = "http://localhost:4000/answer";
+    const baseUrl = "http://3.36.120.221:8080/answers";
     const newAnswer = {
-      anwserId: 1005,
+      answerId: 1005,
       content: userAnswerInput,
       memberId: 5,
-      createdAt: "2022-2-15T16:32:22.000003333",
       answerLike: {
         memberId: [4, 7, 5],
       },
       nickName: "user6",
     };
-    axios.post("http://3.36.120.221:8080/answers", newAnswer);
+    axios.post(baseUrl, newAnswer);
     e.preventDefault();
     alert("답변이 등록되었어요.");
     setUserAnswerInput("");
@@ -45,9 +48,13 @@ export function PostDetail() {
           <h1 className="text-[45px] font-bold mb-5 mt-5">{title}</h1>
           <section className="flex items-center mb-5">
             <VscAccount size={38} />
-            <span className="text-[20px] font-bold border-solid border-r-4 pr-5 ml-5">{nickname}</span>
-            <span className="text-[20px] pl-5 text-gray-500">{createdAT}</span>
-            <span className="text-[20px] ml-[30px]">{cartegory}</span>
+            <span className="text-[20px] font-bold border-solid border-r-4 pr-5 ml-5">{nickname || "-"}</span>
+            <span className="text-[20px] pl-5 text-gray-500">{createdAt && dayjs(createdAt).format("YYYY-MM-DD")}</span>
+            {category?.map((el, i) => (
+              <span key={i} className="text-[20px] ml-[30px]">
+                {el}
+              </span>
+            ))}
           </section>
           <div className="w-[60vw] border-solid border-[2px] mb-[20px]" />
           <article className="text-xl h-auto pt-[20px] pb-[20px] leading-10">{content}</article>
@@ -66,7 +73,7 @@ export function PostDetail() {
               <div className="h-auto pt-[30px] pb-[30px]">
                 {answerCount > 0 &&
                   answerData.map((el, i) => {
-                    const { answerLike, anwserId, content, createdAt } = el;
+                    const { answerLike, answerId, content, createdAt } = el;
                     return (
                       <div className="mb-5" key={i}>
                         <div className="flex items-center mb-2">
@@ -74,8 +81,10 @@ export function PostDetail() {
                             <VscAccount size={38} />
                           </span>
                           <div className="flex flex-col">
-                            <span className="ml-3 font-extrabold text-[15px]">{anwserId}</span>
-                            <span className="ml-3 text-[12px] text-gray-500">{createdAt}</span>
+                            <span className="ml-3 font-extrabold text-[15px]">{answerId}</span>
+                            <span className="ml-3 text-[12px] text-gray-500">
+                              {dayjs(createdAt).format("YYYY-MM-DD")}
+                            </span>
                           </div>
                         </div>
                         <div className="mb-2">{content}</div>
@@ -96,7 +105,7 @@ export function PostDetail() {
               <span className="text-[20px] ml-2 mb-3">답변하기</span>
             </section>
             <form onSubmit={handleSubmit}>
-              <Form
+              <TextField
                 sx={{
                   width: "60vw",
                   "& .MuiInputBase-root": {
@@ -105,6 +114,7 @@ export function PostDetail() {
                 }}
                 value={userAnswerInput}
                 rows={7}
+                multiline
                 placeholder="질문에 답변을 등록해보세요."
                 onChange={e => setUserAnswerInput(e.target.value)}
               />

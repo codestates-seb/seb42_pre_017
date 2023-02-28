@@ -17,6 +17,7 @@ import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/questions")
 @Validated
@@ -51,12 +52,7 @@ public class QuestionController {
     @PatchMapping("{question-id}")
     public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long questionId,
                                          @RequestBody QuestionDto.Patch requestBody){
-        requestBody.setQuestionId(questionId);
-        System.out.println(requestBody.getQuestionAnswerStatus());
-        System.out.println(requestBody.getQuestionOpenStatus());
         Question question = mapper.questionPatchDtoToQuestion(requestBody);
-        System.out.println("*".repeat(70));
-        System.out.println(question.getQuestionOpenStatus());
         Question updatedQuestion = service.updateQuestion(question);
 
         return new ResponseEntity<>(
@@ -75,14 +71,12 @@ public class QuestionController {
     public ResponseEntity getQuestions(@RequestParam List<String> category,
                                        @Positive @RequestParam int page,
                                        @Positive @RequestParam int size){
-        System.out.println("*".repeat(75));
-        category.stream().forEach(a -> System.out.println(a));
-//        Page<Question> pageQuestions = service.getQuestions(page - 1,size);
 
                         Page<Question> pageQuestions = category.isEmpty()?
                 service.getQuestions(page - 1,size) :
                 service.getQuestions(category, page - 1, size);
         List<Question> questions = pageQuestions.getContent();
+
         return new ResponseEntity(
                 new MultiResponseDto<>(
                         mapper.questionsToResponseDtos(questions), pageQuestions), HttpStatus.OK);

@@ -1,5 +1,6 @@
 package com.preproject.myoverflow.response;
 
+import com.preproject.myoverflow.exception.ExceptionCode;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
@@ -14,16 +15,16 @@ import java.util.stream.Collectors;
 public class ErrorResponse {
 
     private Integer status;
+
     private String message;
     private List<FieldError> fieldErrors;
     private List<ConstraintViolationError> violationErrors;
 
 
-    private ErrorResponse(int status, String message){
+    private ErrorResponse(int status, String message) {
         this.status = status;
         this.message = message;
     }
-
 
     //원래는 보통 public으로 생성한다. 여기서는 특이하게도 private로 이용함.
     private ErrorResponse(List<FieldError> fieldErrors, List<ConstraintViolationError> violationErrors){
@@ -41,10 +42,17 @@ public class ErrorResponse {
     }
 
 
-    public static ErrorResponse of(HttpStatus httpStatus){
+    public static ErrorResponse of(ExceptionCode exceptionCode) {
+        return new ErrorResponse(exceptionCode.getStatus(), exceptionCode.getMessage());
+    }
+
+    public static ErrorResponse of(HttpStatus httpStatus) {
         return new ErrorResponse(httpStatus.value(), httpStatus.getReasonPhrase());
     }
 
+    public static ErrorResponse of(HttpStatus httpStatus, String message) {
+        return new ErrorResponse(httpStatus.value(), message);
+    }
 
     @Getter
     @AllArgsConstructor

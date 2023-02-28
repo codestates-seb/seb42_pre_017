@@ -3,6 +3,7 @@ package com.preproject.myoverflow.answer;
 import com.preproject.myoverflow.answer.Answer.AnswerOpenStatus;
 import com.preproject.myoverflow.answer.AnswerDto.Patch;
 import com.preproject.myoverflow.answer.AnswerDto.Response;
+import com.preproject.myoverflow.member.Member;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-02-22T15:56:54+0900",
+    date = "2023-02-28T02:22:38+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.17 (Azul Systems, Inc.)"
 )
 @Component
@@ -38,18 +39,25 @@ public class AnswerMapperImpl implements AnswerMapper {
         }
 
         String answerOpenStatus = null;
+        String memberId = null;
+        String nickname = null;
         long answerId = 0L;
         String content = null;
         LocalDateTime createdAt = null;
         LocalDateTime modifiedAt = null;
 
         answerOpenStatus = answerAnswerOpenStatusStatus( answer );
+        Long memberId1 = answerMemberMemberId( answer );
+        if ( memberId1 != null ) {
+            memberId = String.valueOf( memberId1 );
+        }
+        nickname = answerMemberNickname( answer );
         answerId = answer.getAnswerId();
         content = answer.getContent();
         createdAt = answer.getCreatedAt();
         modifiedAt = answer.getModifiedAt();
 
-        Response response = new Response( answerId, content, createdAt, modifiedAt, answerOpenStatus );
+        Response response = new Response( answerId, content, createdAt, modifiedAt, answerOpenStatus, memberId, nickname );
 
         return response;
     }
@@ -81,5 +89,32 @@ public class AnswerMapperImpl implements AnswerMapper {
             return null;
         }
         return status;
+    }
+
+    private Long answerMemberMemberId(Answer answer) {
+        if ( answer == null ) {
+            return null;
+        }
+        Member member = answer.getMember();
+        if ( member == null ) {
+            return null;
+        }
+        long memberId = member.getMemberId();
+        return memberId;
+    }
+
+    private String answerMemberNickname(Answer answer) {
+        if ( answer == null ) {
+            return null;
+        }
+        Member member = answer.getMember();
+        if ( member == null ) {
+            return null;
+        }
+        String nickname = member.getNickname();
+        if ( nickname == null ) {
+            return null;
+        }
+        return nickname;
     }
 }

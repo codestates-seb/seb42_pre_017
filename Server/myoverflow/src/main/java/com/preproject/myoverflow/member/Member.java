@@ -14,11 +14,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-@Entity
 public class Member extends Auditable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -37,12 +37,17 @@ public class Member extends Auditable {
     @Column(nullable = false)
     private String nickname;
 
-    //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     @OneToMany(mappedBy = "member")
     private List<Question> questions = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
     private List<Answer> answers = new ArrayList<>();
+
+//    @OneToMany(mappedBy = "member",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<Question> questions = new ArrayList<>();
+//
+//    @OneToMany(mappedBy = "member",cascade = {CascadeType.PERSIST, CascadeType.REMOVE})
+//    private List<Answer> answers = new ArrayList<>();
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> roles = new ArrayList<>();

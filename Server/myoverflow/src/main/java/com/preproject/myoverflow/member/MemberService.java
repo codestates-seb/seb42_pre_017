@@ -1,10 +1,9 @@
 package com.preproject.myoverflow.member;
 
-import com.preproject.myoverflow.auth.CustomAuthorityUtils;
-import org.springframework.security.crypto.password.PasswordEncoder;
+//import com.preproject.myoverflow.auth.utils.CustomAuthorityUtils;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.spec.OAEPParameterSpec;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,22 +12,25 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-    private final PasswordEncoder passwordEncoder;
-    private final CustomAuthorityUtils authorityUtils;
+//    private final PasswordEncoder passwordEncoder;
 
-    public MemberService(MemberRepository memberRepository, PasswordEncoder passwordEncoder, CustomAuthorityUtils customAuthorityUtils){
-        this.passwordEncoder = passwordEncoder;
-        this.authorityUtils = customAuthorityUtils;
+//    private final CustomAuthorityUtils authorityUtils;
+
+    public MemberService(MemberRepository memberRepository){
+//                         PasswordEncoder passwordEncoder,
+//                         CustomAuthorityUtils authorityUtils){
+//        this.authorityUtils = authorityUtils;
+//        this.passwordEncoder = passwordEncoder;
         this.memberRepository = memberRepository;
     }
 
 
     public Member createMember(Member member){
-        String encryptedPassword = passwordEncoder.encode(member.getPassword());
-        member.setPassword(encryptedPassword);
-
-        List<String> roles = authorityUtils.createRoles(member.getEmail());
-        member.setRoles(roles);
+//        String encrtptedPassword = passwordEncoder.encode(member.getPassword());
+//        member.setPassword(encrtptedPassword);
+//
+//        List<String> roles = authorityUtils.createRoles(member.getEmail());
+//        member.setRoles(roles);
 
         Member createdMember = memberRepository.save(member);
         return createdMember;

@@ -1,5 +1,6 @@
 package com.preproject.myoverflow.question;
 
+import com.preproject.myoverflow.validator.NotSpace;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,13 +33,13 @@ public class QuestionDto {
     public static class Patch{
 
         private long questionId;
-        //null or 유의미한 값만 받기
+        @NotSpace
         private String title;
 
-        //null or 유의미한 값만 받기
+        @NotSpace
         private String content;
 
-        //null or 유의미한 값만 받기
+        @NotSpace
         private List<String> category;
 
         @Positive

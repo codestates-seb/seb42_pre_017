@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
@@ -15,8 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 
+@Transactional
 @Service
-//Todo : @Transational 적용
 public class QuestionService {
     private final QuestionRepository repository;
 
@@ -30,13 +31,11 @@ public class QuestionService {
 
 
     public Question createQuestion(Question question){
-        memberService.findVerifiedMember(question.getMember().getMemberId());
         Question createdQuestion = repository.save(question);
         return createdQuestion;
     }
 
     public Question updateQuestion(Question question){
-
         Question foundQuestion = findVerifiedQuestion(question.getQuestionId(), question.getMember().getMemberId());
 
         Optional.ofNullable(question.getTitle()).ifPresent(title -> foundQuestion.setTitle(title));
@@ -48,16 +47,18 @@ public class QuestionService {
 
         return repository.save(foundQuestion);
     }
-
+    @Transactional(readOnly = true)
     public Question getQuestion(long questionId){
         return findVerifiedQuestion(questionId);
     }
 
+    @Transactional(readOnly = true)
     public Page<Question> getQuestions(int page, int size){
         return repository.findAll(PageRequest.of(page, size, Sort.by("createdAt").descending()));
     }
 
-    public Page<Question> getQuestions(List<String> category, int page, int size){
+    @Transactional(readOnly = true)
+    public Page<Question> getCategoryQuestions(List<String> category, int page, int size){
         return repository.findByCategory(category, PageRequest.of(page, size, Sort.by("createdAt").descending()));
     }
 

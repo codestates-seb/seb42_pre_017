@@ -8,12 +8,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-//Todo : @Transational 적용
+@Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
 
@@ -54,11 +55,11 @@ public class MemberService {
         return updateMember;
     }
 
-
+    @Transactional(readOnly = true)
     public Member findMember(long memberId){
         return findVerifiedMember(memberId);
     }
-
+    @Transactional(readOnly = true)
     public Page<Member> findMembers(int page, int size) {
         return memberRepository.findAll(PageRequest.of(page, size,
                 Sort.by("memberId").descending()));
@@ -82,5 +83,4 @@ public class MemberService {
         if (member.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
-
 }

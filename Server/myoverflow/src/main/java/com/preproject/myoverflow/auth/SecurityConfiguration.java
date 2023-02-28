@@ -2,6 +2,8 @@ package com.preproject.myoverflow.auth;
 
 
 
+import com.preproject.myoverflow.auth.handler.MemberAuthenticationFailureHandler;
+import com.preproject.myoverflow.auth.handler.MemberAuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -71,6 +73,8 @@ public class SecurityConfiguration {
 
             JwtAuthenticationFilter jwtAuthenticationFilter = new JwtAuthenticationFilter(authenticationManager, jwtTokenizer);  // (2-4)
             jwtAuthenticationFilter.setFilterProcessesUrl("/myoverflow/login");          // (2-5)
+            jwtAuthenticationFilter.setAuthenticationSuccessHandler(new MemberAuthenticationSuccessHandler());  // (3) 추가
+            jwtAuthenticationFilter.setAuthenticationFailureHandler(new MemberAuthenticationFailureHandler());  // (4)
 
             builder.addFilter(jwtAuthenticationFilter);  // (2-6)
         }

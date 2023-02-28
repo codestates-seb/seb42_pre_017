@@ -67,7 +67,7 @@ public class AnswerService {
         answerRepository.deleteById(answerId);
     }
 
-    //Todo : findVerified로 존재하는 questionId인지 확인
+    //Todo : findVerified로 존재하는 questionId인지 확인ㅇㅇ
 
     public Answer findVerifiedAnswer(long answerId) {
         Optional<Answer> optionalAnswer =

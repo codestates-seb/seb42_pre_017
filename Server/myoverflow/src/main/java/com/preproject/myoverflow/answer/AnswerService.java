@@ -67,7 +67,7 @@ public class AnswerService {
     public void deleteAnswer(long answerId){
         Question foundQuestion = answerRepository.
                 findById(answerId).
-                orElseThrow(() -> new RuntimeException(ExceptionCode.ANSWER_NOT_FOUND)).
+                orElseThrow(() -> null).//new RuntimeException(ExceptionCode.ANSWER_NOT_FOUND)).
                 getQuestion();
 
         if(foundQuestion.getAnswers().size() < 1) {
@@ -82,20 +82,20 @@ public class AnswerService {
         Optional<Answer> optionalAnswer =
                 answerRepository.findById(answerId);
         Answer findAnswer =
-                optionalAnswer.orElseThrow(() -> new RuntimeException(ExceptionCode.ANSWER_NOT_FOUND));
+                optionalAnswer.orElseThrow(() -> null);//new RuntimeException(ExceptionCode.ANSWER_NOT_FOUND));
         return findAnswer;
     }
 
     public Answer findVerifiedAnswer(long answerId, long memberId, long questionId){
         if(questionService.findVerifiedQuestion(questionId).getQuestionId() != questionId)
-            throw new RuntimeException(ExceptionCode.MEBER_NOT_MATCH);
+            throw null;//new RuntimeException(ExceptionCode.MEBER_NOT_MATCH);
         if(memberService.findVerifiedMember(memberId).getMemberId() != questionId)
-            throw new RuntimeException(ExceptionCode.QUESTION_NOT_MATCH);
+            throw null;//new RuntimeException(ExceptionCode.QUESTION_NOT_MATCH);
 
         Optional<Answer> optionalAnswer =
                 answerRepository.findById(answerId);
         Answer findAnswer =
-                optionalAnswer.orElseThrow(() -> new RuntimeException(ExceptionCode.ANSWER_NOT_FOUND));
+                optionalAnswer.orElseThrow(() -> null);//new RuntimeException(ExceptionCode.ANSWER_NOT_FOUND));
         return findAnswer;
     }
 }

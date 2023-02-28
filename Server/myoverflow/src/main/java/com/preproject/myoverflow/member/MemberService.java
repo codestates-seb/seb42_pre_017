@@ -2,11 +2,13 @@ package com.preproject.myoverflow.member;
 
 //import com.preproject.myoverflow.auth.utils.CustomAuthorityUtils;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import com.preproject.myoverflow.auth.CustomAuthorityUtils;
 import com.preproject.myoverflow.exception.BusinessLogicException;
 import com.preproject.myoverflow.exception.ExceptionCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,26 +20,26 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-//    private final CustomAuthorityUtils authorityUtils;
+    private final CustomAuthorityUtils authorityUtils;
 
-    public MemberService(MemberRepository memberRepository){
-//                         PasswordEncoder passwordEncoder,
-//                         CustomAuthorityUtils authorityUtils){
-//        this.authorityUtils = authorityUtils;
-//        this.passwordEncoder = passwordEncoder;
+    public MemberService(MemberRepository memberRepository,
+                         PasswordEncoder passwordEncoder,
+                         CustomAuthorityUtils authorityUtils){
+        this.authorityUtils = authorityUtils;
+        this.passwordEncoder = passwordEncoder;
         this.memberRepository = memberRepository;
     }
 
 
     public Member createMember(Member member){
         verifyExistsEmail(member.getEmail());
-//        String encrtptedPassword = passwordEncoder.encode(member.getPassword());
-//        member.setPassword(encrtptedPassword);
-//
-//        List<String> roles = authorityUtils.createRoles(member.getEmail());
-//        member.setRoles(roles);
+        String encrtptedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encrtptedPassword);
+
+        List<String> roles = authorityUtils.createRoles(member.getEmail());
+        member.setRoles(roles);
 
         Member createdMember = memberRepository.save(member);
         return createdMember;

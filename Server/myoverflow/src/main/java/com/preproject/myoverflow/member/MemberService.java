@@ -53,7 +53,7 @@ public class MemberService {
                 .ifPresent(password -> foundMember.setPassword(password));
         Optional.ofNullable(member.getMemberStatus())
                 .ifPresent(memberStatus -> foundMember.setMemberStatus(memberStatus));
-        Member updateMember = memberRepository.save(member);
+        Member updateMember = memberRepository.save(foundMember);
         return updateMember;
     }
 

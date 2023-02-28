@@ -17,10 +17,12 @@ public class MemberDto {
         @Email //목요일 시간나면 이메일 인증 구현
         private String email;
 
-        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[₩~!@#$%^&*()_+,.<>/?:'])[A-Za-z\\d₩~!@#$%^&*()_+,.<>/?:']{8,}$")
+        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[₩~!@#$%^&*()_+,.<>/?:'])[A-Za-z\\d₩~!@#$%^&*()_+,.<>/?:']{8,}$"
+                ,message = "8문자 이상이어야 하며 영어, 숫자, 특수문자(₩~!@#$%^&*()_+,.<>/?:')를 포함해야합니다")
+
         private String password;
 
-        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]){2,}$") //길이 : 2글자 이상
+        @Pattern(regexp = "^.{2,10}$", message = "두글자 이상 10글자 이하로 작성해주세요") //길이 : 2글자 이상
         private String nickname;
     }
 
@@ -28,11 +30,12 @@ public class MemberDto {
     public static class Patch{
         //@NotSpace 구현
         //길이 : 2글자 이상
-        @Pattern(regexp = "^(?=.*[a-zA-Z])(?=.*[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]){2,}$")
+        @Pattern(regexp = "^.{2,10}$", message = "두글자 이상 10글자 이하로 작성해주세요") //길이 : 2글자 이상
         private String nickname;
 
         //길디 : 8자리 이상, 특수문자 포함, 한글안됨
-        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[₩~!@#$%^&*()_+,.<>/?:'])[A-Za-z\\d₩~!@#$%^&*()_+,.<>/?:']{8,}$")
+        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[₩~!@#$%^&*()_+,.<>/?:'])[A-Za-z\\d₩~!@#$%^&*()_+,.<>/?:']{8,}$"
+                ,message = "8문자 이상이어야 하며 영어, 숫자, 특수문자(₩~!@#$%^&*()_+,.<>/?:')를 포함해야합니다")
         private String password;
 
         @Positive

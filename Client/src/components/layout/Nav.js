@@ -9,16 +9,18 @@ import ModalBackGround from '../ui/ModalBackGround';
 import { Button } from '@mui/material';
 import {useNavigate} from 'react-router-dom'
 import { getUser } from '../../util/data';
+import LoginConfirm from '../ui/LoginConfirm';
+import SignUp from '../SignUp/SignUp';
 export default function Nav() {
   const [toggle, setToggle] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [change,setChange] = useState(false)
   const [user,setUser] =useState()
   const userMenu = useRef();
   const navigate = useNavigate()
   useEffect(()=>{
     setUser(getUser())
   },[isOpen,toggle])
-
   const handleModal = () => {
     setIsOpen(!isOpen)
     setToggle(!toggle)
@@ -39,9 +41,15 @@ export default function Nav() {
           >
             <Modal
              children={
-              <SignIn
+              change === false ?<SignIn
                onClose={setIsOpen}
-               />}
+               onChange={setChange}
+               /> :
+              <SignUp
+              // onClose={setIsOpen}
+              onChange={setChange}
+              />
+              }
              onClose={setIsOpen}  
             />
           </ModalBackGround>
@@ -56,6 +64,7 @@ export default function Nav() {
             <img src={"/images/logo.png"} alt="logo" className="w-[180px] inline-block" />
           </Link>
         </div>
+        <LoginConfirm />
         <div className="flex gap-7 text-2xl">
           {user && 
           <Button
@@ -73,6 +82,7 @@ export default function Nav() {
           </button>
           {toggle &&<MyPageDropDown onClick={handleModal} user={user} onToggle={setToggle}/>}
         </div>
+       
       </nav>
     </div>
   );

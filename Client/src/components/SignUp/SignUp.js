@@ -9,42 +9,47 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Input from '../ui/Input';
-import SignIn from '../SignIn/SignIn';
 import { Link } from "react-router-dom";
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link to='/'>
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import CopyRight from '../ui/CopyRight'
 const theme = createTheme();
-export default function SignUp() {
+export default function SignUp({onChange}) {
     const [ErrorBar,setErrorBar] = useState('')
   const [text,setText] = useState('')
   const handleSubmit = (event) => {
     event.preventDefault();
+const email = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
+    const password = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}/   
     const data = new FormData(event.currentTarget);
-    if(data.get('email').trim().length === 0 ||
-        data.get('password').trim().length === 0 || 
-        data.get('nickname').trim().length === 0 ) {
-          setErrorBar('모든항목을 작성해주세요')
+    const nickname = /^[a-zA-Z0-9]{2,}$/
+    // console.log(email.test(data.get('email')));
+    // console.log(password.test(data.get('password')));
+    // console.log(nickname.test(data.get('nickname')));
+    if(!nickname.test(data.get('nickname')) ||
+        !email.test(data.get('email')) || 
+        !password.test(data.get('password'))) {
+           //  8 ~ 10자 영문, 숫자 조합
+          setErrorBar('형식에 맞게 작성했는지 확인해주세요')
           return;
         }
-    if(data.get('password') !== data.get('text_confirm')){
-        setErrorBar('비밀번호가 일치하지 않습니다')
+    else if(data.get('email').trim().length === 0 ||
+    data.get('password').trim().length === 0 ||
+    data.get('nickname').trim().length === 0 
+    ){
+        console.log(data.get('password_confirm'));
+        setErrorBar('모든항목을 작성해주세요')
     }
+    else if(data.get('password') !== data.get('password_confirm')){
+        setErrorBar('비밀번호가 일치하지 않습니다')
+        return;
+    }else{
     setText({
         email: data.get('email'),
         password: data.get('password'),
         });
+        setErrorBar('')
+    }  
   };
+  console.log(text);
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="sm">
@@ -64,10 +69,11 @@ export default function SignUp() {
           <h1 className='text-lg mb-3 text-gray-500'>회원가입에 필요한 정보를 입력해주세요</h1>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-                <Input type='nickname'/>
-                <Input type='email'/>
-                <Input type='password'/>
-                <Input type='text_confirm'/>
+                <Input type='nickname' name='nickname'onError={setErrorBar} error={ErrorBar}/>
+                <Input type='email' name='email'/>
+                <Input type='password' name='password'/>
+                <Input type='password' name='password_confirm' />
+                 {<div className='text-gray-700 font-thin'>{ErrorBar}</div>}
               <Grid item xs={12}>
                 <FormControlLabel
                   control={<Checkbox value="allowExtraEmails" color="primary" />}
@@ -83,17 +89,17 @@ export default function SignUp() {
             >
               회원가입
             </Button>
-            {<div className='text-gray-700 text-center font-thin'>{ErrorBar}</div>}
+           
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link to='/'>
+                <Link onClick={()=>{onChange(prev=>!prev)}}>
                   이미 회원이신가요?
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
+        <CopyRight sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );

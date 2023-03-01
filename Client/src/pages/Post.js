@@ -38,7 +38,12 @@ export function Post() {
       content: data.content,
     };
 
-    axios.post(`http://3.36.120.221:8080/questions`, newData);
+    axios.post(`http://13.209.121.17:8080/questions`, {
+      memberId: 1,
+      title: data.title,
+      category: [data.stack],
+      content: data.content,
+    });
     alert("질문이 등록되었어요.");
     navigate("/");
   };

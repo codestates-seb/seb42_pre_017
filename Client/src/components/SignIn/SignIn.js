@@ -10,7 +10,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import Input from '../ui/Input';
-import { getUser, login } from '../../util/data';
+import { login } from '../../util/data';
 function Copyright(props) {
     return (
       <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -24,17 +24,26 @@ function Copyright(props) {
     );
   }
 const theme = createTheme();
-export default function SignIn({onClose}) {
+export default function SignIn({onClose,onChange}) {
   const [ErrorBar,setErrorBar] = useState(false)
   const [text,setText] = useState('')
+  const [isChecked,setIsChecked] = useState(false)
     const handleSubmit = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+        const email = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
+    const password = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}/
+        console.log(data.get('email'));
         if(data.get('email').trim().length === 0 ||
         data.get('password').trim().length === 0) {
-          setErrorBar(true)
+          setErrorBar('모든항목을 작성해주세요')
+          return;
+        }else if( !email.test(data.get('email')) || 
+        !password.test(data.get('password'))){
+          setErrorBar('정보가 맞는지 확인해주세요') // 메시지 고민중 바꿀수도
           return;
         }
+        else{
         setErrorBar(false)
         setText({
           email: data.get('email'),
@@ -42,7 +51,10 @@ export default function SignIn({onClose}) {
         });
         onClose(isOpen=>!isOpen)
         login() //로그인이 되면서
-      };  
+      }
+      
+      }; 
+      console.log(text);
       return (
         <ThemeProvider theme={theme}>
           <Container component="main" maxWidth="sm">
@@ -63,11 +75,15 @@ export default function SignIn({onClose}) {
               </Typography>
               <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 ,margin:0}}>
               <Grid container spacing={2}> 
-                <Input type='email' />
-                <Input type='password' />
+                <Input type='email' name='email'/>
+                <Input type='password' name='password'/>
                 <Grid item xs={12}>
                   <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
+                    control={<Checkbox
+                                value="remember"
+                                color="primary"
+                                onChange={()=>setIsChecked(!isChecked)}
+                                checked={isChecked}/>}
                     label="Remember me"
                   />
                 </Grid>
@@ -80,9 +96,9 @@ export default function SignIn({onClose}) {
                 >
                   Sign In
                 </Button>
-                {ErrorBar &&<div className='text-gray-700 text-center font-thin'>모든항목을 작성해주세요</div>}
+                {ErrorBar &&<div className='text-gray-700 text-center font-thin'>{ErrorBar}</div>}
                 <Grid sx={{ mt: 3, mb: 2 }} >
-                  아직 회원이 아니신가요? <Link>회원가입</Link>
+                  아직 회원이 아니신가요? <Link onClick={()=>{onChange(prev=>!prev)}}>회원가입</Link>
                 </Grid>
               </Box>   
             </Box>

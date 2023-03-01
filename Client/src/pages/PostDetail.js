@@ -23,7 +23,7 @@ export function PostDetail() {
     getAnswerData().then(res => setAnswerData(res));
   }, []);
   const handleSubmit = e => {
-    const baseUrl = "http://3.36.120.221:8080/answers";
+    const baseUrl = "http://13.209.121.17:8080/answers";
     const newAnswer = {
       answerId: 1005,
       content: userAnswerInput,

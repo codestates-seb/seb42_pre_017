@@ -9,11 +9,15 @@ export default function Card({ data }) {
   const { answerCount, category, content, createdAt, likeCount, title, nickname, questionId } = data;
   const handleClick = () => {
     navigate(`/postdetail/${questionId}`, { state: { data } });
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+  })
   };
   return (
     <li
       onClick={handleClick}
-      className="border-4 shadow-md border-gray-300 rounded-3xl cursor-pointer
+      className="border-4 shadow-md border-gray-300 rounded-3xl cursor-pointer 
                     hover:scale-105 duration-300 w-[21rem] h-[24rem] p-9 flex flex-col justify-between m-5"
     >
       <div className="flex flex-col justify-center items-start gap-3 text-darkMode">
@@ -26,7 +30,7 @@ export default function Card({ data }) {
            <Stack stack={category} />}
            {category.length === 0 && <div className='h-[2rem]'></div>}
         </div>
-        <div className="line-clamp-2 text-sm">{content}</div>
+        <div className="line-clamp-2 text-sm text">{content}</div>
       </div>
       <div className="flex justify-between mb-0.5">
         <div className="font-semibold">{nickname}</div>

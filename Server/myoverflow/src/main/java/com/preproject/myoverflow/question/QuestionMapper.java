@@ -23,7 +23,20 @@ public interface QuestionMapper {
         return question;
     }
 
-    Question questionPatchDtoToQuestion(QuestionDto.Patch patch);
+    default Question questionPatchDtoToQuestion(QuestionDto.Patch patch){
+        Question question = new Question();
+        Member member = new Member();
+
+        member.setMemberId(patch.getMemberId());
+
+        question.setQuestionId(patch.getQuestionId());
+        question.setCategory(patch.getCategory());
+        question.setTitle(patch.getTitle());
+        question.setContent(patch.getContent());
+        question.setMember(member);
+
+        return question;
+    }
     @Mapping(source = "questionAnswerStatus.status", target = "questionAnswerStatus")
     @Mapping(source = "questionOpenStatus.status", target = "questionOpenStatus")
     @Mapping(source = "member.memberId",  target = "memberId")

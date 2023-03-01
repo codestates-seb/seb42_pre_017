@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
@@ -15,8 +16,8 @@ import java.util.List;
 import java.util.Optional;
 
 
+@Transactional
 @Service
-//Todo : @Transational 적용
 public class QuestionService {
     private final QuestionRepository repository;
 
@@ -30,14 +31,12 @@ public class QuestionService {
 
 
     public Question createQuestion(Question question){
-        memberService.findVerifiedMember(question.getMember().getMemberId());
         Question createdQuestion = repository.save(question);
         return createdQuestion;
     }
 
     public Question updateQuestion(Question question){
-
-        Question foundQuestion = findVerifiedQuestion(question.getQuestionId(), question.getMember().getMemberId());
+        Question foundQuestion = findVerifiedQuestion(question.getQuestionId());
 
         Optional.ofNullable(question.getTitle()).ifPresent(title -> foundQuestion.setTitle(title));
         Optional.ofNullable(question.getContent()).ifPresent(content -> foundQuestion.setContent(content));
@@ -48,16 +47,18 @@ public class QuestionService {
 
         return repository.save(foundQuestion);
     }
-
+    @Transactional(readOnly = true)
     public Question getQuestion(long questionId){
         return findVerifiedQuestion(questionId);
     }
 
+    @Transactional(readOnly = true)
     public Page<Question> getQuestions(int page, int size){
         return repository.findAll(PageRequest.of(page, size, Sort.by("createdAt").descending()));
     }
 
-    public Page<Question> getQuestions(List<String> category, int page, int size){
+    @Transactional(readOnly = true)
+    public Page<Question> getCategoryQuestions(List<String> category, int page, int size){
         return repository.findByCategory(category, PageRequest.of(page, size, Sort.by("createdAt").descending()));
     }
 
@@ -66,21 +67,13 @@ public class QuestionService {
     }
 
     public Question findVerifiedQuestion(long questionId) {
-        Optional<Question> optionalQuestion = repository.findById(questionId);
+        Optional<Question> optionalQuestion =
+                repository.findById(questionId);
         Question foundQuestion =
                 optionalQuestion
-                        .orElse(null);
+                        .orElseThrow(null);
 //                        .orElseThrow(() ->
 //                        new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
         return foundQuestion;
     }
-
-    private Question findVerifiedQuestion(long questionId, long memberId){
-        Question foundQuestion = findVerifiedQuestion(questionId);
-        if(foundQuestion.getMember().getMemberId() != memberId)
-            new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
-        return foundQuestion;
-    }
-
-
 }

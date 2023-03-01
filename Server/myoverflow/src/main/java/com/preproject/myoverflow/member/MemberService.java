@@ -2,41 +2,44 @@ package com.preproject.myoverflow.member;
 
 //import com.preproject.myoverflow.auth.utils.CustomAuthorityUtils;
 //import org.springframework.security.crypto.password.PasswordEncoder;
+import com.preproject.myoverflow.auth.CustomAuthorityUtils;
 import com.preproject.myoverflow.exception.BusinessLogicException;
 import com.preproject.myoverflow.exception.ExceptionCode;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-//Todo : @Transational 적용
+@Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
 
-//    private final PasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-//    private final CustomAuthorityUtils authorityUtils;
+    private final CustomAuthorityUtils authorityUtils;
 
-    public MemberService(MemberRepository memberRepository){
-//                         PasswordEncoder passwordEncoder,
-//                         CustomAuthorityUtils authorityUtils){
-//        this.authorityUtils = authorityUtils;
-//        this.passwordEncoder = passwordEncoder;
+    public MemberService(MemberRepository memberRepository,
+                         PasswordEncoder passwordEncoder,
+                         CustomAuthorityUtils authorityUtils){
+        this.authorityUtils = authorityUtils;
+        this.passwordEncoder = passwordEncoder;
         this.memberRepository = memberRepository;
     }
 
 
     public Member createMember(Member member){
         verifyExistsEmail(member.getEmail());
-//        String encrtptedPassword = passwordEncoder.encode(member.getPassword());
-//        member.setPassword(encrtptedPassword);
-//
-//        List<String> roles = authorityUtils.createRoles(member.getEmail());
-//        member.setRoles(roles);
+        String encrtptedPassword = passwordEncoder.encode(member.getPassword());
+        member.setPassword(encrtptedPassword);
+
+        List<String> roles = authorityUtils.createRoles(member.getEmail());
+        member.setRoles(roles);
 
         Member createdMember = memberRepository.save(member);
         return createdMember;
@@ -50,15 +53,15 @@ public class MemberService {
                 .ifPresent(password -> foundMember.setPassword(password));
         Optional.ofNullable(member.getMemberStatus())
                 .ifPresent(memberStatus -> foundMember.setMemberStatus(memberStatus));
-        Member updateMember = memberRepository.save(member);
+        Member updateMember = memberRepository.save(foundMember);
         return updateMember;
     }
 
-
+    @Transactional(readOnly = true)
     public Member findMember(long memberId){
         return findVerifiedMember(memberId);
     }
-
+    @Transactional(readOnly = true)
     public Page<Member> findMembers(int page, int size) {
         return memberRepository.findAll(PageRequest.of(page, size,
                 Sort.by("memberId").descending()));
@@ -82,5 +85,4 @@ public class MemberService {
         if (member.isPresent())
             throw new BusinessLogicException(ExceptionCode.MEMBER_EXISTS);
     }
-
 }

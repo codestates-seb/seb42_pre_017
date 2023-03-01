@@ -1,5 +1,6 @@
 package com.preproject.myoverflow.answer;
 
+import com.preproject.myoverflow.validator.NotSpace;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,7 +28,7 @@ public class AnswerDto {
     public static class Patch {
         private long answerId;
 
-        //null or 유의미한 값만 받기
+        @NotSpace
         private String content;
 
         private String memberId;

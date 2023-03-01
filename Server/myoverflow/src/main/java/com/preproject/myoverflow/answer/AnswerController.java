@@ -19,12 +19,8 @@ import java.util.List;
 @RequestMapping("/answers")
 @Validated
 public class AnswerController {
-
     private final AnswerService answerService;
     private final AnswerMapper mapper;
-
-    @Autowired
-    Gson gson;
 
     public AnswerController(AnswerService answerService, AnswerMapper mapper) {
         this.answerService = answerService;
@@ -36,7 +32,9 @@ public class AnswerController {
         Answer answer = mapper.answerPostDtoToAnswer(answerPostDto);
         Answer response = answerService.createAnswer(answer);
 
-        return new ResponseEntity<>(mapper.answerToAnswerResponseDto(response), HttpStatus.OK);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.answerToAnswerResponseDto(response))
+                , HttpStatus.OK);
     }
 
     @PatchMapping("/{answer-id}")
@@ -46,21 +44,27 @@ public class AnswerController {
 
         Answer response =
                 answerService.updateAnswer(mapper.answerPatchDtoToAnswer(answerPatchDto));
-        return new ResponseEntity<>(new SingleResponseDto<>(mapper.answerToAnswerResponseDto(response)), HttpStatus.OK);
+        return new ResponseEntity<>(
+                new SingleResponseDto<>(mapper.answerToAnswerResponseDto(response))
+                , HttpStatus.OK);
     }
 
     @GetMapping("/{answer-id}")
     public ResponseEntity findAnswer(@Positive @PathVariable("answer-id") long answerId){
+        Answer response = answerService.findAnswer(answerId);
+
         return new ResponseEntity<>(
-                new SingleResponseDto<>(mapper.answerToAnswerResponseDto(answerService.findAnswer(answerId))),HttpStatus.OK);
+                new SingleResponseDto<>(mapper.answerToAnswerResponseDto(response))
+                ,HttpStatus.OK);
     }
 
     @GetMapping
     public ResponseEntity findQuestionAnswers(@Positive @RequestParam long questionId){
-        List<Answer> foundAnswers = answerService.findAllAnswers(questionId);
-        foundAnswers.stream().forEach(a -> System.out.println(a.getMember().getMemberId()));
+        List<Answer> foundAnswers = answerService.findAllQuestionAnswers(questionId);
+
         return new ResponseEntity(
-                new SingleResponseDto<>(mapper.answerListToAnswerResponseDtos(foundAnswers)),HttpStatus.OK);
+                new SingleResponseDto<>(mapper.answerListToAnswerResponseDtos(foundAnswers))
+                ,HttpStatus.OK);
     }
 
     @DeleteMapping("/{answer-id}")

@@ -67,14 +67,13 @@ public class QuestionService {
     }
 
     public Question findVerifiedQuestion(long questionId) {
-        Optional<Question> optionalQuestion = repository.findById(questionId);
+        Optional<Question> optionalQuestion =
+                repository.findById(questionId);
         Question foundQuestion =
                 optionalQuestion
-                        .orElse(null);
+                        .orElseThrow(null);
 //                        .orElseThrow(() ->
 //                        new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
         return foundQuestion;
     }
-
-
 }

@@ -9,9 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface QuestionRepository extends JpaRepository<Question, Long> {
-
     @Query(value = "SELECT q FROM Question q join q.category qc WHERE qc IN (:category)")
     Page<Question> findByCategory(@Param("category") List<String> category, Pageable pageable);
 

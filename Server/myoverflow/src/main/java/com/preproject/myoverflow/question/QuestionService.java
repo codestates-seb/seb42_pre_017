@@ -1,9 +1,14 @@
 package com.preproject.myoverflow.question;
 
+import com.preproject.myoverflow.exception.BusinessLogicException;
+import com.preproject.myoverflow.exception.ExceptionCode;
+import com.preproject.myoverflow.member.Member;
+import com.preproject.myoverflow.member.MemberService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.swing.text.html.Option;
 import java.time.LocalDateTime;
@@ -11,12 +16,16 @@ import java.util.List;
 import java.util.Optional;
 
 
+@Transactional
 @Service
-//Todo : @Transational 적용
 public class QuestionService {
     private final QuestionRepository repository;
 
-    public QuestionService(QuestionRepository repository){
+    private final MemberService memberService;
+
+    public QuestionService(QuestionRepository repository,
+                           MemberService memberService){
+        this.memberService = memberService;
         this.repository = repository;
     }
 
@@ -27,9 +36,8 @@ public class QuestionService {
     }
 
     public Question updateQuestion(Question question){
-//        Question foundQuestion = findVerifiedQuestion(question.getQuestionId(), question.getMemberId());
-        //Todo : 아래 추후 위의 메소드로 교체
-        Question foundQuestion = repository.findById(question.getQuestionId()).orElse(null);
+        Question foundQuestion = findVerifiedQuestion(question.getQuestionId());
+
         Optional.ofNullable(question.getTitle()).ifPresent(title -> foundQuestion.setTitle(title));
         Optional.ofNullable(question.getContent()).ifPresent(content -> foundQuestion.setContent(content));
         Optional.ofNullable(question.getCategory()).ifPresent(stack -> foundQuestion.setCategory(stack));
@@ -39,20 +47,18 @@ public class QuestionService {
 
         return repository.save(foundQuestion);
     }
-
+    @Transactional(readOnly = true)
     public Question getQuestion(long questionId){
         return findVerifiedQuestion(questionId);
     }
 
+    @Transactional(readOnly = true)
     public Page<Question> getQuestions(int page, int size){
-        System.out.println("no cate");
         return repository.findAll(PageRequest.of(page, size, Sort.by("createdAt").descending()));
     }
 
-    public Page<Question> getQuestions(List<String> category, int page, int size){
-        System.out.println("*".repeat(70));
-        System.out.println("cate");
-        System.out.println(category.get(0));
+    @Transactional(readOnly = true)
+    public Page<Question> getCategoryQuestions(List<String> category, int page, int size){
         return repository.findByCategory(category, PageRequest.of(page, size, Sort.by("createdAt").descending()));
     }
 
@@ -60,25 +66,14 @@ public class QuestionService {
         repository.delete(findVerifiedQuestion(questionId));
     }
 
-//    private Question findVerifiedQuestion(long questionId, long memberId){
-//        Todo : questionId로 DB의 레코드 들고와서 update하려는 question의 memberId가 같은지 판별
-//         , 맞을 시 DB에서 가져온 Question return
-//        Optional<Question> optionalQuestion = repository.findById(questionId);
-//        Question q = new Question(1,"title","content", List.of("123","123"), Question.QuestionStatus.QUESTION_NOT_ANSWERD, Question.QuestionOpenStatus.QUESTION_PRIVATE);
-//        Optional<String> oq = Optional.of(q.getTitle());
-//        oq.or(oq.).
-//        Question foundQuestion =
-//                optionalQuestion.or()
-//    }
-
     public Question findVerifiedQuestion(long questionId) {
-        Optional<Question> optionalQuestion = repository.findById(questionId);
+        Optional<Question> optionalQuestion =
+                repository.findById(questionId);
         Question foundQuestion =
                 optionalQuestion
-                        .orElse(null);
+                        .orElseThrow(null);
 //                        .orElseThrow(() ->
 //                        new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
         return foundQuestion;
     }
-
 }

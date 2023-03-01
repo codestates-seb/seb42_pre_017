@@ -1,24 +1,25 @@
 import React from "react";
-import { DiJavascript1 } from "react-icons/di";
-import { SiTypescript } from "react-icons/si";
+import { Avatar } from "@mui/material";
+// import { ReactComponent as JavaIcon } from "/images/Java-logo.svg";
+
 export default function Stack({ stack }) {
   return (
-    <div>
-      {stack === "javascript" ? (
-        <div className="border border-yellow-500 w-10 h-10 rounded-full flex items-center">
-          <DiJavascript1
-            className="bg-yellow-500 
-                     rounded-full w-8 h-8 p-1 ml-0.5"
+    <>
+      {stack === "전체" || (
+        <div className="border border-gray-500 w-10 h-9 rounded-full flex items-center mr-2">
+          {/* <Avatar alt={stack} src={`./image/${stack}-logo.png`} sx={{width:'2.2rem', height:'2rem', marginLeft:'0.1rem'}}/> */}
+          <Avatar
+            alt={stack}
+            src={`${process.env.PUBLIC_URL}/images/${stack}-logo.png`}
+            sx={{ width: "2.2rem", height: "2rem", marginLeft: "0.1rem" }}
           />
-        </div>
-      ) : (
-        <div className="border border-blue-700 w-10 h-10 rounded-full flex items-center justify-center  mr-1">
-          <SiTypescript
-            className="text-blue-700
-                      rounded-full w-8 h-8"
-          />
+          {/* <Avatar
+            alt={stack}
+            src={`/images/${stack}-logo.svg`}
+            sx={{ width: "2.2rem", height: "2rem", marginLeft: "0.1rem" }}
+          /> */}
         </div>
       )}
-    </div>
+    </>
   );
 }

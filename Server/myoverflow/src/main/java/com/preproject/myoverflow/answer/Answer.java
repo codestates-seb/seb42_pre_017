@@ -1,6 +1,7 @@
 package com.preproject.myoverflow.answer;
 
 import com.preproject.myoverflow.audit.Auditable;
+import com.preproject.myoverflow.member.Member;
 import com.preproject.myoverflow.question.Question;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,9 +23,7 @@ public class Answer extends Auditable {
     @Column(nullable = false)
     private String content;
 
-//    @Column(nullable = false)
-//    private Member member;
-
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     @ManyToOne
     @JoinColumn(name="QUESTION_ID")
     private Question question;
@@ -32,6 +31,15 @@ public class Answer extends Auditable {
     public void addQuestion(Question question){
         this.question = question;
     }
+//ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
+    @ManyToOne
+    @JoinColumn(name = "MEMBER_ID")
+    private Member member;
+
+    public void addMember(Member member){
+        this.member = member;
+    }
+
 
     @Enumerated(value = EnumType.STRING)
     @Column(length = 21, nullable = false)

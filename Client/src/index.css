@@ -16,13 +16,19 @@
 body {
   width: 100vw;
   height: 100vh;
-  @apply flex justify-center w-full 
-
+  @apply flex justify-center w-full;
 }
-#root{
-@apply  w-full
+#root {
+  @apply w-full;
 }
 .slice-list {
   height: 20rem;
+}
+.textField-radius fieldset{
+  border-radius: 20rem;
+  
+}
+.list{
+  flex: 1 1 auto;
 }
 

@@ -17,11 +17,10 @@ export default function SubNav({ text, onFilter, filter, onClick, click }) {
       isAll || onClick([...click, text]);
     }
   };
-  console.log(click.length);
   return (
     <>
       <button
-        className={`border border-black ${
+        className={`border-2 border-gray-600 shadow-sm ${
           ((isAll && toggle) || (!isAll && toggle)) && "bg-slate-500 text-white"
         } rounded-full p-3 hover:scale-105 duration-300 shrink w-40
                              flex items-center justify-center ${isAll && "mb-4 h-16"} ${

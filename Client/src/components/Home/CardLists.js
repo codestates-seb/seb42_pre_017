@@ -41,9 +41,9 @@ export default function CardLists() {
       console.log(data);
     }
   }, [filter, pagenation.page, click]);
-  console.log(pagenation);
   return (
     <section className="max-w-screen-2xl m-auto p-5 w-[90vw]">
+      {/* <SubNav onFilter={setFilter} filter={filter} onClick={setClick} click={click} text='전체' /> */}
       <PopularTap />
       <nav className="gap-6 mb-10 flex">
         {filteredTap.map((text, idx) => (
@@ -59,8 +59,8 @@ export default function CardLists() {
           />
         ))}
       </nav>
-      <div className="h-[80vh]">
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 h-full">
+      <div className="h-[70vh] flex flex-col">
+        <ul className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-10 h-9/10">
           {data && data.map((data, idx) => <Card key={idx} data={data} />)}
         </ul>
         <Page pagenation={pagenation} onPagenation={setPagenation} data={data} />

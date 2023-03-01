@@ -1,12 +1,14 @@
 import Nav from "./components/layout/Nav";
 import { Outlet } from "react-router-dom";
+import { RecoilRoot, atom, selector, useRecoilState, useRecoilValue } from "recoil";
 
 function App() {
-  
   return (
     <>
-      <Nav />
-      <Outlet />
+      <RecoilRoot>
+        <Nav />
+        <Outlet />
+      </RecoilRoot>
     </>
   );
 }

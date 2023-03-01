@@ -39,7 +39,7 @@ export function Setting() {
       category: [data.stack],
     };
 
-    // axios.post(`http://13.209.121.17:8080/questions`, newData);
+    axios.patch(`http://13.209.121.17:8080/questions`, newData);
     alert("회원 정보가 수정되었습니다.");
     navigate("/");
   };
@@ -109,7 +109,7 @@ export function Setting() {
         <div className="mt-10 mb-5 flex flex-col">
           <section className="flex mb-2">
             <GoThreeBars size={24} />
-            <span className="text-[20px] ml-[10px]">관심 기술 스택(선택)</span>
+            <span className="text-[20px] ml-[10px]">관심 기술(선택)</span>
           </section>
           <Controller
             name="stack"
@@ -118,7 +118,6 @@ export function Setting() {
             render={({ field: { value, onChange } }) => {
               return (
                 <>
-                  <input hidden="hidden" />
                   <DropDown
                     value={value}
                     onChange={onChange}

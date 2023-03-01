@@ -17,6 +17,7 @@ import javax.validation.constraints.Positive;
 import java.net.URI;
 import java.util.List;
 
+@CrossOrigin
 @RestController
 @RequestMapping("/questions")
 @Validated
@@ -63,13 +64,13 @@ public class QuestionController {
                 new SingleResponseDto<>(mapper.questionToResponseDto(updatedQuestion)),HttpStatus.OK);
     }
 
-    @GetMapping("{question-id}")
-    public ResponseEntity getQuestion(@PathVariable("question-id") @Positive long questionId){
-        Question foundQuestion = service.getQuestion(questionId);
-        //Todo : ResponseEntity<> 랑 ResponseEntity 차이 ??
-        return new ResponseEntity(
-                new SingleResponseDto<>(mapper.questionToResponseDto(foundQuestion)), HttpStatus.OK);
-    }
+//    @GetMapping("{question-id}")
+//    public ResponseEntity getQuestion(@PathVariable("question-id") @Positive long questionId){
+//        Question foundQuestion = service.getQuestion(questionId);
+//        //Todo : ResponseEntity<> 랑 ResponseEntity 차이 ??
+//        return new ResponseEntity(
+//                new SingleResponseDto<>(mapper.questionToResponseDto(foundQuestion)), HttpStatus.OK);
+//    }
 
     @GetMapping
     public ResponseEntity getQuestions(@RequestParam List<String> category,

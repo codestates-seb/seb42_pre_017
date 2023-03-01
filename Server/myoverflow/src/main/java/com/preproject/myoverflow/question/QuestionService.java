@@ -36,7 +36,7 @@ public class QuestionService {
     }
 
     public Question updateQuestion(Question question){
-        Question foundQuestion = findVerifiedQuestion(question.getQuestionId(), question.getMember().getMemberId());
+        Question foundQuestion = findVerifiedQuestion(question.getQuestionId());
 
         Optional.ofNullable(question.getTitle()).ifPresent(title -> foundQuestion.setTitle(title));
         Optional.ofNullable(question.getContent()).ifPresent(content -> foundQuestion.setContent(content));
@@ -73,13 +73,6 @@ public class QuestionService {
                         .orElse(null);
 //                        .orElseThrow(() ->
 //                        new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
-        return foundQuestion;
-    }
-
-    private Question findVerifiedQuestion(long questionId, long memberId){
-        Question foundQuestion = findVerifiedQuestion(questionId);
-        if(foundQuestion.getMember().getMemberId() != memberId)
-            new BusinessLogicException(ExceptionCode.MEMBER_NOT_FOUND);
         return foundQuestion;
     }
 

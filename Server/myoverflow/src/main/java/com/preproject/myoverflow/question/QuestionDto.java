@@ -22,7 +22,7 @@ public class QuestionDto {
         @NotBlank(message = "내용은 공백이 아니어야함")
         private String content;
 
-        @NotBlank
+        @NotNull
         private List<String> category;
 
         @Positive
@@ -39,7 +39,6 @@ public class QuestionDto {
         @NotSpace
         private String content;
 
-        @NotSpace
         private List<String> category;
 
         @Positive

@@ -44,9 +44,7 @@ public class AnswerService {
     }
 
     public Answer updateAnswer(Answer answer){
-        Answer foundAnswer = findVerifiedAnswer(answer.getAnswerId(),
-                answer.getMember().getMemberId(),
-                answer.getQuestion().getQuestionId());
+        Answer foundAnswer = findVerifiedAnswer(answer.getAnswerId());
 
         Optional.ofNullable(answer.getContent()).ifPresent(content -> foundAnswer.setContent(content));
         foundAnswer.setModifiedAt(LocalDateTime.now());
@@ -79,19 +77,6 @@ public class AnswerService {
     }
 
     public Answer findVerifiedAnswer(long answerId) {
-        Optional<Answer> optionalAnswer =
-                answerRepository.findById(answerId);
-        Answer findAnswer =
-                optionalAnswer.orElseThrow(() -> null);//new RuntimeException(ExceptionCode.ANSWER_NOT_FOUND));
-        return findAnswer;
-    }
-
-    public Answer findVerifiedAnswer(long answerId, long memberId, long questionId){
-        if(questionService.findVerifiedQuestion(questionId).getQuestionId() != questionId)
-            throw null;//new RuntimeException(ExceptionCode.MEBER_NOT_MATCH);
-        if(memberService.findVerifiedMember(memberId).getMemberId() != questionId)
-            throw null;//new RuntimeException(ExceptionCode.QUESTION_NOT_MATCH);
-
         Optional<Answer> optionalAnswer =
                 answerRepository.findById(answerId);
         Answer findAnswer =

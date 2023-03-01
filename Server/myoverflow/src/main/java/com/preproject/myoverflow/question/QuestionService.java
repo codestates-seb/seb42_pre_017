@@ -70,9 +70,8 @@ public class QuestionService {
         Optional<Question> optionalQuestion = repository.findById(questionId);
         Question foundQuestion =
                 optionalQuestion
-                        .orElse(null);
-//                        .orElseThrow(() ->
-//                        new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+                        .orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
         return foundQuestion;
     }
 

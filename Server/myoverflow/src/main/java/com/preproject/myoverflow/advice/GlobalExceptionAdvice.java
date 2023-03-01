@@ -1,7 +1,11 @@
 package com.preproject.myoverflow.advice;
 
+import com.preproject.myoverflow.exception.BusinessLogicException;
+import com.preproject.myoverflow.exception.ExceptionCode;
 import com.preproject.myoverflow.response.ErrorResponse;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.validation.ConstraintViolationException;
 
+@Slf4j
 @RestControllerAdvice
 public class GlobalExceptionAdvice {
 
@@ -39,5 +44,15 @@ public class GlobalExceptionAdvice {
         final ErrorResponse response = ErrorResponse.of(HttpStatus.METHOD_NOT_ALLOWED);
 
         return response;
+    }
+
+    @ExceptionHandler//우리가 만든 BusinessLogicException을 이용하는 경우임
+    public ResponseEntity handleBusinessLogicException(BusinessLogicException e){
+        log.error("# BusinessLogicException", e);
+        System.out.println(e.getExceptionCode().getStatus());
+        System.out.println(e.getExceptionCode().getMessage());
+        final ErrorResponse response = ErrorResponse.of(e.getExceptionCode());
+
+        return new ResponseEntity(HttpStatus.valueOf(e.getExceptionCode().getStatus()));
     }
 }

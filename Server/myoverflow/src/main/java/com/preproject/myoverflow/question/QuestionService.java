@@ -71,9 +71,8 @@ public class QuestionService {
                 repository.findById(questionId);
         Question foundQuestion =
                 optionalQuestion
-                        .orElseThrow(null);
-//                        .orElseThrow(() ->
-//                        new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
+                        .orElseThrow(() ->
+                        new BusinessLogicException(ExceptionCode.QUESTION_NOT_FOUND));
         return foundQuestion;
     }
 }

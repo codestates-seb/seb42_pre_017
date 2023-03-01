@@ -37,9 +37,6 @@ public class AnswerService {
     }
     public Answer createAnswer(Answer answer){
         Answer createdAnswer = answerRepository.save(answer);
-        Question question = createdAnswer.getQuestion();
-        question.setQuestionAnswerStatus(QUESTION_ANSWERED);
-        questionService.updateQuestion(question);
         return createdAnswer;
     }
 
@@ -67,11 +64,6 @@ public class AnswerService {
                 findById(answerId).
                 orElseThrow(() -> null).//new RuntimeException(ExceptionCode.ANSWER_NOT_FOUND)).
                 getQuestion();
-
-        if(foundQuestion.getAnswers().size() < 1) {
-            foundQuestion.setQuestionAnswerStatus(QUESTION_NOT_ANSWERED);
-            questionService.updateQuestion(foundQuestion);
-        }
 
         answerRepository.deleteById(answerId);
     }

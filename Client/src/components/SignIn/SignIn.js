@@ -32,7 +32,7 @@ export default function SignIn({onClose,onChange,onMemberId}) {
   const [isChecked,setIsChecked] = useState(false)
   const [isLogin,setIsLogin] =useState(false)
     const changeText = (e)=>{
-      console.log(e.target.username);
+      // console.log(e.target.username);
     }
     const handleSubmit = async(event) => {
         event.preventDefault();
@@ -48,9 +48,9 @@ export default function SignIn({onClose,onChange,onMemberId}) {
           setErrorBar('정보가 맞는지 확인해주세요') // 메시지 고민중 바꿀수도
           return;
         }else{
-        setText(
+        setText({
          text
-          );
+          });
         
           // setIsLogin(true)
           setErrorBar('')
@@ -59,10 +59,10 @@ export default function SignIn({onClose,onChange,onMemberId}) {
             },1000*5)
           
         //로그인이 되면서
-        console.log(text);
+        // console.log(text);
       }
       }; 
-      console.log(text);
+      // console.log(text);
       return (
         <ThemeProvider theme={theme}>
           <Container component="main" maxWidth="sm">

@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 export default function Input({type,name,value,onChange}) {
-
     return (
         <Grid item xs={12}> 
         <TextField
@@ -15,7 +14,7 @@ export default function Input({type,name,value,onChange}) {
                  className='textField-radius'
                  autoComplete={type}
                  value={value}
-                 onChange={onchange}
+                 onChange={onChange}
         />      
         {/* <div className='text-gray-700 text-center font-thin text-sm'>{name} 형식이 제대로 됐는지 확인해주세요</div> */}
         </Grid>   

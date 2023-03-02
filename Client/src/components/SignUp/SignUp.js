@@ -22,9 +22,6 @@ const email = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
     const password = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}/   
     const data = new FormData(event.currentTarget);
     const nickname = /^[a-zA-Z0-9]{2,}$/
-    // console.log(email.test(data.get('email')));
-    // console.log(password.test(data.get('password')));
-    // console.log(nickname.test(data.get('nickname')));
     if(!nickname.test(data.get('nickname')) ||
         !email.test(data.get('email')) || 
         !password.test(data.get('password'))) {
@@ -36,7 +33,6 @@ const email = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
     data.get('password').trim().length === 0 ||
     data.get('nickname').trim().length === 0 
     ){
-        console.log(data.get('password_confirm'));
         setErrorBar('모든항목을 작성해주세요')
     }
     else if(data.get('password') !== data.get('password_confirm')){
@@ -52,7 +48,6 @@ const email = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
         setTimeout(()=>{onClose(isOpen=>!isOpen)},1000*5)
     }  
   };
-  console.log(text);
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="sm">
@@ -92,7 +87,6 @@ const email = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
             >
               회원가입
             </Button>
-           
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <Link onClick={()=>{onChange(prev=>!prev)}}>

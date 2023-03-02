@@ -23,8 +23,6 @@ public class Answer extends Auditable {
     @Column(nullable = false)
     private String content;
 
-//    @Column(nullable = false)
-//    private Member member;
 //ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ
     @ManyToOne
     @JoinColumn(name="QUESTION_ID")

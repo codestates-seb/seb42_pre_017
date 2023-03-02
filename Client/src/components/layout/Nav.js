@@ -26,7 +26,6 @@ export default function Nav() {
     setIsOpen(!isOpen)
     setToggle(!toggle)
   };
-  console.log(memberId);
   const handleCloseModal = (e) => {
     if(userMenu.current === e.target)
      setIsOpen(!isOpen)
@@ -67,7 +66,6 @@ export default function Nav() {
             <img src={"/images/logo.png"} alt="logo" className="w-[180px] inline-block" />
           </Link>
         </div>
-        <LoginConfirm />
         <div className="flex gap-7 text-2xl">
           {user && 
           <Button
@@ -84,8 +82,7 @@ export default function Nav() {
             <FaRegUserCircle />
           </button>
           {toggle &&<MyPageDropDown onClick={handleModal} user={user} onToggle={setToggle}/>}
-        </div>
-       
+        </div>      
       </nav>
     </div>
   );

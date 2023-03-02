@@ -62,7 +62,7 @@ public class AnswerService {
     public void deleteAnswer(long answerId){
         Question foundQuestion = answerRepository.
                 findById(answerId).
-                orElseThrow(() -> null).//new RuntimeException(ExceptionCode.ANSWER_NOT_FOUND)).
+                orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND)).
                 getQuestion();
 
         answerRepository.deleteById(answerId);
@@ -72,7 +72,7 @@ public class AnswerService {
         Optional<Answer> optionalAnswer =
                 answerRepository.findById(answerId);
         Answer findAnswer =
-                optionalAnswer.orElseThrow(() -> null);//new RuntimeException(ExceptionCode.ANSWER_NOT_FOUND));
+                optionalAnswer.orElseThrow(() -> new BusinessLogicException(ExceptionCode.ANSWER_NOT_FOUND));
         return findAnswer;
     }
 }

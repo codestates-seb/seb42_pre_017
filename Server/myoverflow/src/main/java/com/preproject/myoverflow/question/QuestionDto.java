@@ -1,6 +1,6 @@
 package com.preproject.myoverflow.question;
 
-import com.preproject.myoverflow.like.questionlike.QuestionLike;
+import com.preproject.myoverflow.validator.NotSpace;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +22,7 @@ public class QuestionDto {
         @NotBlank(message = "내용은 공백이 아니어야함")
         private String content;
 
-        @NotNull //"" 나 " "은 허용
+        @NotNull
         private List<String> category;
 
         @Positive
@@ -33,20 +33,13 @@ public class QuestionDto {
     public static class Patch{
 
         private long questionId;
-
-        @NotEmpty(message = "제목은 공백이 아니어야 합니다.")
+        @NotSpace
         private String title;
 
-        @NotEmpty(message = "내용은 공백이 아니어야함")
+        @NotSpace
         private String content;
 
-        @NotNull //"" 나 " "은 허용
         private List<String> category;
-
-        private Question.QuestionAnswerStatus questionAnswerStatus;
-
-        private Question.QuestionOpenStatus questionOpenStatus;
-
 
         @Positive
         private long memberId;
@@ -65,9 +58,7 @@ public class QuestionDto {
         private LocalDateTime modifiedAt;
         private Long memberId;
         private String nickname;
-//        private List<QuestionLike> questionLikes;
         private int likeCount;
-//        private List<Answer> answers;
         private int answerCount;
     }
 }

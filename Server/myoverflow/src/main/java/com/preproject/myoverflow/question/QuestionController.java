@@ -41,49 +41,40 @@ public class QuestionController {
 
         Question createdQuestion = service.createQuestion(question);
 
-        URI location = UriComponentsBuilder
-                .newInstance()
-                .path(QUESTION_DEFAULT_URL + "/{question-id}")
-                .buildAndExpand(createdQuestion.getQuestionId())
-                .toUri();
-        return ResponseEntity.created(location).build();
+        return new ResponseEntity(
+                new SingleResponseDto<>(mapper.questionToResponseDto(createdQuestion))
+                ,HttpStatus.CREATED);
     }
 
     @PatchMapping("{question-id}")
     public ResponseEntity patchQuestion(@PathVariable("question-id") @Positive long questionId,
                                          @RequestBody QuestionDto.Patch requestBody){
         requestBody.setQuestionId(questionId);
-        System.out.println(requestBody.getQuestionAnswerStatus());
-        System.out.println(requestBody.getQuestionOpenStatus());
+
         Question question = mapper.questionPatchDtoToQuestion(requestBody);
-        System.out.println("*".repeat(70));
-        System.out.println(question.getQuestionOpenStatus());
         Question updatedQuestion = service.updateQuestion(question);
 
         return new ResponseEntity<>(
                 new SingleResponseDto<>(mapper.questionToResponseDto(updatedQuestion)),HttpStatus.OK);
     }
 
-//    @GetMapping("{question-id}")
-//    public ResponseEntity getQuestion(@PathVariable("question-id") @Positive long questionId){
-//        Question foundQuestion = service.getQuestion(questionId);
-//        //Todo : ResponseEntity<> 랑 ResponseEntity 차이 ??
-//        return new ResponseEntity(
-//                new SingleResponseDto<>(mapper.questionToResponseDto(foundQuestion)), HttpStatus.OK);
-//    }
+    @GetMapping("{question-id}")
+    public ResponseEntity getQuestion(@PathVariable("question-id") @Positive long questionId){
+        Question foundQuestion = service.getQuestion(questionId);
+        return new ResponseEntity(
+                new SingleResponseDto<>(mapper.questionToResponseDto(foundQuestion))
+                , HttpStatus.OK);
+    }
 
     @GetMapping
     public ResponseEntity getQuestions(@RequestParam List<String> category,
                                        @Positive @RequestParam int page,
                                        @Positive @RequestParam int size){
-        System.out.println("*".repeat(75));
-        category.stream().forEach(a -> System.out.println(a));
-//        Page<Question> pageQuestions = service.getQuestions(page - 1,size);
-
-                        Page<Question> pageQuestions = category.isEmpty()?
+        Page<Question> pageQuestions = category.isEmpty()?
                 service.getQuestions(page - 1,size) :
-                service.getQuestions(category, page - 1, size);
+                service.getCategoryQuestions(category, page - 1, size);
         List<Question> questions = pageQuestions.getContent();
+
         return new ResponseEntity(
                 new MultiResponseDto<>(
                         mapper.questionsToResponseDtos(questions), pageQuestions), HttpStatus.OK);

@@ -1,5 +1,6 @@
 package com.preproject.myoverflow.answer;
 
+import com.preproject.myoverflow.validator.NotSpace;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,8 +28,10 @@ public class AnswerDto {
     public static class Patch {
         private long answerId;
 
-        @NotBlank(message = "답변을 작성해 주세요")
+        @NotSpace
         private String content;
+
+        private String memberId;
     }
 
     @AllArgsConstructor
@@ -39,5 +42,7 @@ public class AnswerDto {
         private LocalDateTime createdAt;
         private LocalDateTime modifiedAt;
         private String answerOpenStatus;
+        private String memberId;
+        private String nickname;
     }
 }

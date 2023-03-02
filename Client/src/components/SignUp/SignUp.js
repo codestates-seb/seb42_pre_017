@@ -11,8 +11,9 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import Input from '../ui/Input';
 import { Link } from "react-router-dom";
 import CopyRight from '../ui/CopyRight'
+import { newUser } from '../../util/data';
 const theme = createTheme();
-export default function SignUp({onChange}) {
+export default function SignUp({onChange,onClose}) {
     const [ErrorBar,setErrorBar] = useState('')
   const [text,setText] = useState('')
   const handleSubmit = (event) => {
@@ -46,7 +47,9 @@ const email = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
         email: data.get('email'),
         password: data.get('password'),
         });
+        newUser(text)
         setErrorBar('')
+        setTimeout(()=>{onClose(isOpen=>!isOpen)},1000*5)
     }  
   };
   console.log(text);

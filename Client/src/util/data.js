@@ -13,11 +13,24 @@ export function getCategoryData(page, category) {
 export function getAnswerData() {
   return axios.get(`http://13.209.121.17:8080/answers?questionId=1`).then(res => res.data.data);
 }
-export function login(loginInfo,isChecked){ //로그인하면 로그인 정보 담는곳, 아마 아랫줄에 이거 이용해서 토큰 받아올듯
+export async function login(loginInfo,callback=()=>{}){ //로그인하면 로그인 정보 담는곳, 아마 아랫줄에 이거 이용해서 토큰 받아올듯
   // if(isChecked){
-    axios.post('http://13.209.121.17:8080/myoverflow/login',{loginInfo}).then(res=>localStorage.setItem('accessToken',res.data.data))
+    try{
+      const response = await axios.post('http://13.209.121.17:8080/myoverflow/login',loginInfo)
+      console.log(response);
+      // localStorage.setItem('accessToken',response.authorization)
+      // localStorage.setItem('refresh',response.refresh)
+      // callback(response.data.memberId)
+    }catch{
+      console.log('error');
+    }
+
+    // return await axios.post('http://13.209.121.17:8080/myoverflow/login',loginInfo).then( res=>{
+      
+    //   return res.data.memberId
+    // })
   // }
-  localStorage.setItem('login', JSON.stringify({memberId:12,email: 'sij333@naver.com' , nickname:'뉸누'}))
+  // localStorage.setItem('login', JSON.stringify({memberId:12,email: 'sij333@naver.com' , nickname:'뉸누'}))
 }
 export function getUser(accessToken){//데이터 (혹은 memberId) 있는지 판별해주고 그에 맞는 데이터 내보내주는 함수
   if(localStorage.getItem('login')){
@@ -25,10 +38,11 @@ export function getUser(accessToken){//데이터 (혹은 memberId) 있는지 판
    return JSON.parse(localStorage.getItem('login'))
   }
 }
-export function newUser(){
-  // axios.post('http://13.209.121.17:8080/login').then(res)
+export function newUser(userInfo){
+  axios.post('http://13.209.121.17:8080/members',{userInfo}).then(console.log)
 }
 export function logout(){
 localStorage.clear()
 }
 // axios.get(`http://3.39.255.131:8080/questions?category=Java&page=1&size=10`).then(console.log)
+// console.log(login({username: 'test@test.com', password: 'aaaa1111!'}))

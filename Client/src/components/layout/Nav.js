@@ -8,23 +8,25 @@ import SignIn from '../SignIn/SignIn';
 import ModalBackGround from '../ui/ModalBackGround';
 import { Button } from '@mui/material';
 import {useNavigate} from 'react-router-dom'
-import { getUser } from '../../util/data';
+import { getUser, login } from '../../util/data';
 import LoginConfirm from '../ui/LoginConfirm';
 import SignUp from '../SignUp/SignUp';
 export default function Nav() {
   const [toggle, setToggle] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
-  const [change,setChange] = useState(false)
+  const [change,setChange] = useState(false);
   const [user,setUser] =useState()
+  const [memberId,setMemberId] = useState()
   const userMenu = useRef();
   const navigate = useNavigate()
   useEffect(()=>{
-    setUser(getUser())
+    setUser(getUser(memberId))
   },[isOpen,toggle])
   const handleModal = () => {
     setIsOpen(!isOpen)
     setToggle(!toggle)
   };
+  console.log(memberId);
   const handleCloseModal = (e) => {
     if(userMenu.current === e.target)
      setIsOpen(!isOpen)
@@ -44,9 +46,10 @@ export default function Nav() {
               change === false ?<SignIn
                onClose={setIsOpen}
                onChange={setChange}
+               onMemberId={setMemberId}
                /> :
               <SignUp
-              // onClose={setIsOpen}
+              onClose={setIsOpen}
               onChange={setChange}
               />
               }

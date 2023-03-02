@@ -24,35 +24,43 @@ function Copyright(props) {
     );
   }
 const theme = createTheme();
-export default function SignIn({onClose,onChange}) {
-  const [ErrorBar,setErrorBar] = useState(false)
-  const [text,setText] = useState('')
+export default function SignIn({onClose,onChange,onMemberId}) {
+  const [ErrorBar,setErrorBar] = useState('')
+  const [text,setText] = useState({
+    username:'',
+    password:''})
   const [isChecked,setIsChecked] = useState(false)
-    const handleSubmit = (event) => {
+  const [isLogin,setIsLogin] =useState(false)
+    const changeText = (e)=>{
+      console.log(e.target.username);
+    }
+    const handleSubmit = async(event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const email = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
-    const password = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}/
-        console.log(data.get('email'));
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,}/
         if(data.get('email').trim().length === 0 ||
         data.get('password').trim().length === 0) {
           setErrorBar('모든항목을 작성해주세요')
           return;
         }else if( !email.test(data.get('email')) || 
-        !password.test(data.get('password'))){
+        !passwordRegex.test(data.get('password'))){
           setErrorBar('정보가 맞는지 확인해주세요') // 메시지 고민중 바꿀수도
           return;
-        }
-        else{
-        setErrorBar(false)
-        setText({
-          email: data.get('email'),
-          password: data.get('password'),
-        });
-        onClose(isOpen=>!isOpen)
-        login() //로그인이 되면서
+        }else{
+        setText(
+         text
+          );
+        
+          // setIsLogin(true)
+          setErrorBar('')
+            setTimeout(()=>{
+              onClose(isOpen=>!isOpen)
+            },1000*5)
+          
+        //로그인이 되면서
+        console.log(text);
       }
-      
       }; 
       console.log(text);
       return (
@@ -75,7 +83,7 @@ export default function SignIn({onClose,onChange}) {
               </Typography>
               <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 ,margin:0}}>
               <Grid container spacing={2}> 
-                <Input type='email' name='email'/>
+                <Input type='email' name='email' onChange={e=>{changeText(e)}}/>
                 <Input type='password' name='password'/>
                 <Grid item xs={12}>
                   <FormControlLabel

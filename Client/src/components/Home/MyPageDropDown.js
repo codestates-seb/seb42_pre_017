@@ -13,7 +13,8 @@ export default function MyPageDropDown({onClick,user,onToggle}) {
   }
   // console.log(user);
   return (
-    <ul className="absolute top-full right-[-15px] mt-1 z-10 bg-white p-1 text-lg ">
+    <ul className="absolute top-full right-[-25px] mt-8 z-10 group-hover:scale-105
+    bg-white p-1 text-lg w-36 flex flex-col justify-center gap-4 items-center">
       <li className='cursor-pointer'>내작성글</li>
       <li onClick={() => navigate("/setting")} className="cursor-pointer">
         설정

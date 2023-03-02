@@ -63,10 +63,10 @@ export default function CardLists() {
           />
         ))}
       </nav>
-      <div className='h-[70vh] flex flex-col'>
+      <div className='h-[80vh] flex flex-col'>
       {loading && <LoadingIcon />}
         <ul
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-10 h-9/10"
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-10 h-9/10 basis-10/12"
         >
           {data && data.map((data, idx) => <Card key={idx} data={data} />)} 
         </ul>

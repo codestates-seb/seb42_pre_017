@@ -3,7 +3,7 @@ import Carousel from "../components/Home/Carousel";
 export function Home() {
   return (
     <>
-      <div className=''>
+      <div>
         <Carousel />
         <CardLists />
       </div>

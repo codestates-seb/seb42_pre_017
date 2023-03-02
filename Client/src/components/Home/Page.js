@@ -13,7 +13,7 @@ export default function Page({pagenation,onPagenation}) {
         onPagenation({...pagenation,page:page+1})
     }
     return (
-        <div className='flex justify-between w-full mt-5 flex-none'>
+        <div className='flex justify-between w-full mt-5 basis-1/12'>
            <Buttons
             text={<AiOutlineArrowLeft
                 className='text-3xl'/>}

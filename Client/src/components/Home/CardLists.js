@@ -4,10 +4,12 @@ import Card from "./Card";
 import SubNav from "./SubNav";
 import Page from "./Page";
 import PopularTap from "./PopularTap";
+import LoadingIcon from '../ui/LoadingIcon';
 const filteredTap = ["Javascript", "Typescript", "React", "Java", "Spring"];
 export default function CardLists() {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState("전체");
+  const [loading,setLoading] = useState(false)
   const [pagenation, setPagenation] = useState({
     page: 1,
     totalElements: 0,
@@ -16,6 +18,7 @@ export default function CardLists() {
   const [click, setClick] = useState([]);
   useEffect(() => {
     const stack = click.join(",");
+    setLoading(true)
     if (filter === "전체") {
       getAllData(pagenation.page)
         .then(res => {
@@ -25,6 +28,7 @@ export default function CardLists() {
             totalElements: res.pageInfo.totalElements,
             totalPages: res.pageInfo.totalPages,
           });
+          setLoading(false)
         })
         .catch(err => console.log(err));
     } else {
@@ -36,15 +40,15 @@ export default function CardLists() {
             totalElements: res.pageInfo.totalElements,
             totalPages: res.pageInfo.totalPages,
           });
+          setLoading(false)
         })
         .catch(err => console.log(err));
-      console.log(data);
     }
-  }, [filter, pagenation.page, click]);
+  }, [filter, pagenation.page,click]);
   return (
     <section className="max-w-screen-2xl m-auto p-5 w-[90vw]">
       {/* <SubNav onFilter={setFilter} filter={filter} onClick={setClick} click={click} text='전체' /> */}
-      <PopularTap />
+       <PopularTap />
       <nav className="gap-6 mb-10 flex">
         {filteredTap.map((text, idx) => (
           <SubNav
@@ -59,9 +63,12 @@ export default function CardLists() {
           />
         ))}
       </nav>
-      <div className="h-[70vh] flex flex-col">
-        <ul className="flex-1 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-10 h-9/10">
-          {data && data.map((data, idx) => <Card key={idx} data={data} />)}
+      <div className='h-[80vh] flex flex-col'>
+      {loading && <LoadingIcon />}
+        <ul
+          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-10 h-9/10 basis-10/12"
+        >
+          {data && data.map((data, idx) => <Card key={idx} data={data} />)} 
         </ul>
         <Page pagenation={pagenation} onPagenation={setPagenation} data={data} />
       </div>

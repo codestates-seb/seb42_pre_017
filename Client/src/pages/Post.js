@@ -37,7 +37,6 @@ export function Post() {
       category: [data.stack],
       content: data.content,
     };
-
     axios.post(`http://13.209.121.17:8080/questions`, newData);
     alert("질문이 등록되었어요.");
     navigate("/");

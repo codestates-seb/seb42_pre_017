@@ -58,22 +58,36 @@ export function PostDetail() {
     setEditId(undefined);
   };
 
-  const handleUpdateAnswerButtonClick = () => {
-    updateAnswer();
-  };
-
-  const handleDeleteAnswerButtonClick = () => {
+  const handleDeleteAnswerButtonClick = answerId => {
     const isConfirm = window.confirm("답변을 삭제하시겠어요?");
     if (isConfirm) {
-      deleteAnswer();
+      deleteAnswer(answerId);
     }
+    getAnswerData().then(res => setAnswerData(res));
   };
 
-  const updateAnswer = () => {
-    return <></>;
+  const handleUpdateAnswerButtonClick = answerId => {
+    editAnswer(answerId, editAnswerInput);
+    updateAnswer(answerId);
+    getAnswerData().then(res => setAnswerData(res));
+    if (editId) {
+      setEditId(undefined);
+    }
+    getAnswerData().then(res => setAnswerData(res));
   };
 
-  const deleteAnswer = () => {
+  // console.log(answerData[0].answerId);
+  // console.log(answerData[0].answerId);
+  const updateAnswer = answerId => {
+    const updateAnswer = {
+      memberId,
+      content: editAnswerInput,
+    };
+    axios.patch(`http://13.209.121.17:8080/answers/${answerId}`, updateAnswer);
+  };
+
+  const deleteAnswer = answerId => {
+    axios.delete(`http://13.209.121.17:8080/answers/${answerId}`);
     alert("답변이 삭제되었어요.");
   };
 
@@ -120,6 +134,7 @@ export function PostDetail() {
               {answerData &&
                 answerData.map((el, i) => {
                   const { answerId, content, createdAt, memberId, nickname } = el;
+                  // console.log(memberId);
                   return (
                     <div className="mb-5" key={i}>
                       <div className="flex items-center mb-2">
@@ -137,15 +152,18 @@ export function PostDetail() {
                             <>
                               <span
                                 className="mr-2 cursor-pointer"
-                                onClick={() => {
-                                  editAnswer(answerId, content);
-                                }}
+                                onClick={() => handleUpdateAnswerButtonClick(answerId)}
                               >
                                 {answerId === editId ? "등록" : "수정"}
                               </span>
+                              {console.log(answerId)}
                               <span
                                 className="mr-2 cursor-pointer"
-                                onClick={answerId === editId ? handleCancelButtonClick : handleDeleteAnswerButtonClick}
+                                onClick={
+                                  answerId === editId
+                                    ? handleCancelButtonClick
+                                    : () => handleDeleteAnswerButtonClick(answerId)
+                                }
                               >
                                 {answerId === editId ? "취소" : "삭제"}
                               </span>

@@ -1,15 +1,22 @@
 import axios from "axios";
 export function getAllData(page) {
   console.log(page.toString());
-  return axios
-    .get(`http://13.209.121.17:8080/questions?category=&page=${page.toString()}&size=10`)
-    .then(res => res.data);
+  return (
+    axios
+      .get(`http://13.209.121.17:8080/questions?category=&page=${page.toString()}&size=10`)
+      // .get(`http://3.39.255.131:8080/questions?category=&page=${page.toString()}&size=10`)
+
+      .then(res => res.data)
+  );
 }
 export function getCategoryData(page, category) {
   console.log(category);
-  return axios
-    .get(`http://13.209.121.17:8080/questions?category=${category}&page=${page.toString()}&size=10`)
-    .then(res => res.data);
+  return (
+    axios
+      .get(`http://13.209.121.17:8080/questions?category=${category}&page=${page.toString()}&size=10`)
+      // .get(`http://3.39.255.131:8080/questions?category=${category}&page=${page.toString()}&size=10`)
+      .then(res => res.data)
+  );
 }
 
 export function login() {

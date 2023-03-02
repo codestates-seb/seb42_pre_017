@@ -38,14 +38,14 @@ export function Post() {
       content: data.content,
     };
 
-    axios.post(`http://3.36.120.221:8080/questions`, newData);
+    axios.post(`http://13.209.121.17:8080/questions`, newData);
     alert("질문이 등록되었어요.");
     navigate("/");
   };
 
   return (
     <>
-      <main className="flex flex-col items-center w-[70vw] m-auto">
+      <main className="flex flex-col items-center">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="mb-5">
             <section className="flex">
@@ -72,7 +72,7 @@ export function Post() {
                 );
               }}
             />
-            {errors.title && <span className="text-red-500 text-[15px] ml-3">{errors.title.message}</span>}
+            {errors.title && <div className="text-red-500 text-[15px] ml-3">{errors.title.message}</div>}
           </div>
           <div className="mb-5 flex flex-col">
             <section className="flex">
@@ -86,7 +86,6 @@ export function Post() {
               render={({ field: { value, onChange } }) => {
                 return (
                   <>
-                    <input hidden="hidden" />
                     <DropDown
                       value={value}
                       onChange={onChange}
@@ -112,7 +111,6 @@ export function Post() {
               render={({ field: { value, onChange } }) => {
                 return (
                   <>
-                    <input hidden="hidden" />
                     <TextField
                       name="content"
                       value={value}

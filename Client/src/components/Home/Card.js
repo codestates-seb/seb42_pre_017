@@ -18,13 +18,15 @@ export default function Card({ data }) {
     >
       <div className="flex flex-col justify-center items-start gap-3 text-darkMode">
         <div className="opacity-50 mb-3 text-sm mt-3 ">등록날짜 | {dayjs(createdAt).format("YYYY-MM-DD")}</div>
-        <div className=" font-semibold">{title}</div>
+        <div className="font-semibold">{title}</div>
         {/* 카드 예외처리 (subNav.js에서의 string과 서버데이터로 받아오는 array 값을 처리하기 위함) */}
-        <div className='flex'>
-          {Array.isArray(category) ?
-           category.map((stack,idx)=><Stack key={idx} stack={stack} />) :
-           <Stack stack={category} />}
-           {category.length === 0 && <div className='h-[2rem]'></div>}
+        <div className="flex">
+          {Array.isArray(category) ? (
+            category.map((stack, idx) => <Stack key={idx} stack={stack} />)
+          ) : (
+            <Stack stack={category} />
+          )}
+          {category.length === 0 && <div className="h-[2rem]"></div>}
         </div>
         <div className="line-clamp-2 text-sm">{content}</div>
       </div>
